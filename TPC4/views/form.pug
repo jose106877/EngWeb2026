@@ -1,0 +1,73 @@
+extends layout
+
+block content
+  .w3-card-4
+    header.w3-container.w3-teal
+      h2= emd ? "Editar Exame Médico Desportivo" : "Novo Exame Médico Desportivo"
+
+    form.w3-container.w3-padding-16(method="POST" action=emd ? `/emd/${emd.id}` : "/emd")
+      if emd
+        input(type="hidden" name="id" value=emd.id)
+
+      .w3-row-padding
+        .w3-half
+          label.w3-text-teal(for="dataEMD") Data do EMD
+          input#dataEMD.w3-input.w3-border.w3-round.w3-margin-bottom(type="date" name="dataEMD" required value=emd ? emd.dataEMD : "")
+
+        .w3-half
+          label.w3-text-teal(for="idade") Idade
+          input#idade.w3-input.w3-border.w3-round.w3-margin-bottom(type="number" name="idade" min="0" required value=emd ? emd.idade : "")
+
+      .w3-row-padding
+        .w3-half
+          label.w3-text-teal(for="primeiro") Primeiro nome
+          input#primeiro.w3-input.w3-border.w3-round.w3-margin-bottom(type="text" name="nome.primeiro" required value=emd ? emd.nome.primeiro : "")
+
+        .w3-half
+          label.w3-text-teal(for="ultimo") Último nome
+          input#ultimo.w3-input.w3-border.w3-round.w3-margin-bottom(type="text" name="nome.último" required value=emd ? emd.nome.último : "")
+
+      .w3-row-padding
+        .w3-half
+          label.w3-text-teal(for="genero") Género
+          select#genero.w3-select.w3-border.w3-round.w3-margin-bottom(name="género" required)
+            option(value="" selected=!emd disabled) Selecionar
+            option(value="M" selected=emd && emd.género == "M") Masculino
+            option(value="F" selected=emd && emd.género == "F") Feminino
+
+        .w3-half
+          label.w3-text-teal(for="morada") Morada
+          input#morada.w3-input.w3-border.w3-round.w3-margin-bottom(type="text" name="morada" required value=emd ? emd.morada : "")
+
+      .w3-row-padding
+        .w3-half
+          label.w3-text-teal(for="modalidade") Modalidade
+          input#modalidade.w3-input.w3-border.w3-round.w3-margin-bottom(type="text" name="modalidade" required value=emd ? emd.modalidade : "")
+
+        .w3-half
+          label.w3-text-teal(for="clube") Clube
+          input#clube.w3-input.w3-border.w3-round.w3-margin-bottom(type="text" name="clube" required value=emd ? emd.clube : "")
+
+      .w3-row-padding
+        .w3-half
+          label.w3-text-teal(for="email") Email
+          input#email.w3-input.w3-border.w3-round.w3-margin-bottom(type="email" name="email" required value=emd ? emd.email : "")
+
+        .w3-half
+          label.w3-text-teal(for="federado") Federado
+          select#federado.w3-select.w3-border.w3-round.w3-margin-bottom(name="federado" required)
+            option(value="" selected=!emd disabled) Selecionar
+            option(value="true" selected=emd && emd.federado) Sim
+            option(value="false" selected=emd && !emd.federado) Não
+
+      .w3-row-padding
+        .w3-half
+          label.w3-text-teal(for="resultado") Resultado
+          select#resultado.w3-select.w3-border.w3-round.w3-margin-bottom(name="resultado" required)
+            option(value="" selected=!emd disabled) Selecionar
+            option(value="true" selected=emd && emd.resultado) Apto
+            option(value="false" selected=emd && !emd.resultado) Não apto
+
+      .w3-section
+        button.w3-button.w3-teal.w3-round(type="submit")= emd ? "Guardar alterações" : "Inserir registo"
+        a.w3-button.w3-grey.w3-round.w3-margin-left(href="/emd") Cancelar

@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .w3-card-4
+    header.w3-container.w3-purple
+      h1 Detalhe do Exame Médico Desportivo
+
+    .w3-container.w3-padding-16
+      if emd
+        p
+          b ID:
+          |  #{emd.id}
+        p
+          b Data do EMD:
+          |  #{emd.dataEMD}
+        p
+          b Nome:
+          |  #{emd.nome.primeiro} #{emd.nome.último}
+        p
+          b Idade:
+          |  #{emd.idade}
+        p
+          b Género:
+          |  #{emd.género}
+        p
+          b Morada:
+          |  #{emd.morada}
+        p
+          b Modalidade:
+          |  #{emd.modalidade}
+        p
+          b Clube:
+          |  #{emd.clube}
+        p
+          b Email:
+          |  #{emd.email}
+        p
+          b Federado:
+          |  #{emd.federado}
+        p
+          b Resultado:
+          |  #{emd.resultado}
+      else
+        p Registo não encontrado.
+
+    footer.w3-container.w3-light-grey.w3-padding-16
+      a.w3-btn.w3-grey(href="javascript:history.back()") Voltar atrás

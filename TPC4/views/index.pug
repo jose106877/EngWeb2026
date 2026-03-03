@@ -1,0 +1,26 @@
+extends layout
+
+
+block content
+  .w3-card-4
+    header.w3-container.w3-teal
+        h1 Lista de Exames Médicos Desportivos 
+          a.w3-btn.w3-round.w3-grey(href="/emd/registo") +
+          a.w3-bar-item.w3-button.w3-round.w3-grey.w3-right.w3-small(href="/emd?sort=nome" style="padding:4px 10px") Nome
+          a.w3-bar-item.w3-button.w3-round.w3-grey.w3-right.w3-margin-right.w3-small(href="/emd?sort=data" style="padding:4px 10px") Data
+    .w3-container
+      table.w3-table-all.w3-margin-top
+        tr
+          th Nome 
+          th Data
+          th Modalidade
+          th Resultado
+        each t in list
+          tr(onclick=`window.location='/emd/${t.id}'` style="cursor:pointer;")
+            td= t.nome.primeiro + " " + t.nome.último
+            td= t.dataEMD
+            td= t.modalidade
+            td= t.resultado
+            td
+              a.w3-btn.w3-round.w3-blue-grey.w3-small(href=`/emd/editar/${t.id}`) Edit
+              a.w3-btn.w3-round.w3-red.w3-small.w3-margin-left(href=`/emd/apagar/${t.id}`) Delete

@@ -1,0 +1,36 @@
+extends layout
+
+mixin statsCard(title, values)
+  .w3-half.w3-margin-bottom
+    .w3-card-4
+      header.w3-container.w3-blue-grey
+        h3= title
+      .w3-container.w3-padding
+        table.w3-table-all
+          tr
+            th Categoria
+            th Quantidade
+          each item in values
+            tr
+              td= item.label
+              td= item.value
+
+block content
+  .w3-card-4
+    header.w3-container.w3-indigo
+      h1 Estatísticas dos Exames Médico-Desportivos
+
+    .w3-container.w3-padding-16
+      p
+        b Total de registos:
+        |  #{stats.total}
+
+      .w3-bar
+        a.w3-button.w3-grey.w3-round(href="/emd") Voltar à lista
+
+      .w3-row-padding.w3-margin-top
+        +statsCard("Distribuição por sexo", stats.sexo)
+        +statsCard("Distribuição por modalidade", stats.modalidade)
+        +statsCard("Distribuição por clube", stats.clube)
+        +statsCard("Distribuição por resultado", stats.resultado)
+        +statsCard("Distribuição por federado", stats.federado)
