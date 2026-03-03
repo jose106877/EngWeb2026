@@ -8,7 +8,7 @@
 ## Autor
 - A106877
 - José Miguel Fernandes Cação
-- <img src="foto.jpeg" alt="foto" width="300">
+- <img src="../foto.jpeg" alt="foto" width="300">
 
 ## Resumo
 
