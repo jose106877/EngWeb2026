@@ -18,6 +18,10 @@ def new_file(filename, content):
         f.write(content)
 
 
+def viatura_filename(marca, modelo):
+    return f"{marca} {modelo}.html"
+
+
 # ----------------- Pagina Principal -----------------
 html = f'''
 <html>
@@ -30,7 +34,7 @@ html = f'''
         <ul>
             <li><a href="listaReparacoes.html">Listagem das Reparações</a></li>
             <li><a href="listaIntervencao.html">Listagem de Tipos de Intervenção</a></li>
-            <li href="listaViaturas.html">Listagem de Viaturas</li>
+            <li><a href="listaViaturas.html">Listagem de Viaturas</a></li>
         </ul>
     </body>
 </html>
@@ -44,8 +48,10 @@ dados = open_json("dataset_reparacoes.json")
 reparacoes = dados["reparacoes"]
 lista_links = ""
 lista_intervencoes = ""
+lista_viaturas = ""
 codigos_intervencao = set()
 intervencoes = {}
+viaturas = {}
 
 reparacoes_ordenadas = reparacoes
 reparacoes_ordenadas.sort(key = lambda r: r["nome"])
@@ -53,6 +59,15 @@ reparacoes_ordenadas.sort(key = lambda r: r["nome"])
 for reparacao in reparacoes_ordenadas:
     for intervencao in reparacao["intervencoes"]:
         codigos_intervencao.add(intervencao["codigo"])
+
+    marca = reparacao["viatura"]["marca"]
+    modelo = reparacao["viatura"]["modelo"]
+    chave_viatura = (marca, modelo)
+
+    if chave_viatura not in viaturas:
+        viaturas[chave_viatura] = []
+    viaturas[chave_viatura].append(reparacao)
+
     lista_links += f'''
     <li>
         <a href="{reparacao["nome"]}.html">{reparacao["nome"]}</a>
@@ -65,6 +80,15 @@ for codigo in codigos_ordenados:
     lista_intervencoes += f'''
     <li>
         <a href="{codigo}.html">{codigo}</a>
+    </li>
+'''
+
+viaturas_ordenadas = sorted(viaturas.items(), key=lambda item: (item[0][0], item[0][1]))
+
+for (marca, modelo), reparacoes_viatura in viaturas_ordenadas:
+    lista_viaturas += f'''
+    <li>
+        <a href="{viatura_filename(marca, modelo)}">{marca} {modelo}</a> ({len(reparacoes_viatura)})
     </li>
 '''
 
@@ -101,6 +125,23 @@ html = f'''
 '''
 
 new_file("./output/listaIntervencao.html", html)
+
+html = f'''
+<html>
+    <head>
+        <title>Reparações</title>
+        <meta charset="utf-8"/>
+    </head>
+    <body>
+        <h3>Reparaçẽs</h3>
+        <ul>
+        {lista_viaturas}
+        </ul>
+    </body>
+</html>
+'''
+
+new_file("./output/listaViaturas.html", html)
 
 # ----------------- Paginas Individuias -----------------
 
@@ -200,3 +241,51 @@ for codigo, dados in intervencoes.items():
 
     new_file(f'./output/{codigo}.html', html)
 
+
+for (marca, modelo), reparacoes_viatura in viaturas_ordenadas:
+    lista_reparacoes = ""
+
+    for reparacao in sorted(reparacoes_viatura, key=lambda r: (r["data"], r["nome"])):
+        lista_reparacoes += f'''
+        <li>
+            <a href="{reparacao["nome"]}.html">
+                {reparacao["data"]} – {reparacao["nome"]}
+            </a>
+        </li>
+        '''
+
+    html = f'''
+    <html>
+        <head>
+            <title>{marca} {modelo}</title>
+            <meta charset="utf-8"/>
+        </head>
+        <body>
+            <h2>{marca} {modelo}</h2>
+
+            <table border="1">
+                <tr>
+                    <td>Marca</td><td>{marca}</td>
+                </tr>
+                <tr>
+                    <td>Modelo</td><td>{modelo}</td>
+                </tr>
+                <tr>
+                    <td>Número de carros</td><td>{len(reparacoes_viatura)}</td>
+                </tr>
+            </table>
+
+            <h3>Reparações associadas</h3>
+            <ul>
+                {lista_reparacoes}
+            </ul>
+
+            <hr/>
+            <address>
+                <a href="listaViaturas.html">Voltar à lista de viaturas</a>
+            </address>
+        </body>
+    </html>
+    '''
+
+    new_file(f'./output/{viatura_filename(marca, modelo)}', html)
