@@ -49,7 +49,7 @@ python3 script_cinema.py
 2. Correr o `json-server` com o dataset preparado:
 
 ```bash
-json-server --watch cinema_completo.json --port 3000
+json-server --watch cinema_completo.json
 ```
 
 3. Iniciar a aplicação Express:
