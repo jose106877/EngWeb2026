@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  .w3-card-4
+    header.w3-container.w3-teal
+      h1= filme.title
+
+    .w3-container
+      table.w3-table-all.w3-margin-top
+        tr
+          td
+            b ID
+          td= filme.id
+        tr
+          td
+            b Título
+          td= filme.title
+        tr
+          td
+            b Ano
+          td= filme.year
+        tr
+          td
+            b Géneros
+          td
+            if filme.genres && filme.genres.length
+              ul
+                each genero in filme.genres
+                  li
+                    a(href=`/generos/${genero.id}`)= genero.nome
+        tr
+          td
+            b Cast
+          td
+            if filme.cast && filme.cast.length
+              ul
+                each ator in filme.cast
+                  li
+                    a(href=`/atores/${ator.id}`)= ator.nome
+
+  footer.w3-container.w3-light-grey.w3-padding-16
+      a.w3-btn.w3-grey(href="/filmes") Voltar atrás

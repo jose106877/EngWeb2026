@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  .w3-card-4
+    header.w3-container.w3-teal
+      h1 Lista de Atores
+    
+    .w3-container
+      table.w3-table-all.w3-margin-top
+        tr
+          th id
+          th ator
+          th #filmes
+        each e in list
+          tr(onclick=`window.location='/atores/${e.id}'` style="cursor:pointer;")
+            td= e.id
+            td= e.nome
+            td= e.numFilmes
