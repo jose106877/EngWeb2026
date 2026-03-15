@@ -1,0 +1,15 @@
+extends layout.pug
+
+block content
+  .w3-container
+    h3 Lista de Generos (#{generos.length})
+    table.w3-table-all.w3-hoverable
+      tr.w3-teal
+        th Id
+        th Designacao
+        th Numero de filmes
+      each g in generos
+        tr
+          td= g.id
+          td= g.nome
+          td= g.numFilmes

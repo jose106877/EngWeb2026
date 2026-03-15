@@ -1,0 +1,38 @@
+services:
+  mongodb:
+    build:
+      context: ./api_dados
+      dockerfile: Dockerfile.mongo
+    container_name: mongodb_cinema
+    networks:
+      - cinema-network
+
+  api:
+    build: 
+      context: ./api_dados
+      dockerfile: Dockerfile # O teu servidor de API minimalista
+    container_name: api_dados_cinema
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/cinema
+    depends_on:
+      - mongodb
+    networks:
+      - cinema-network
+
+  interface:
+    build:
+      context: ./interface
+      dockerfile: Dockerfile.interface # Dockerfile para este novo servidor
+    container_name: interface_web_cinema
+    ports:
+      - "7790:7790"
+    environment:
+      - API_URL=http://api:7789
+    depends_on:
+      - api
+    networks:
+      - cinema-network
+
+networks:
+  cinema-network:
+    driver: bridge

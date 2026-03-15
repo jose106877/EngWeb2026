@@ -1,0 +1,15 @@
+extends layout.pug
+
+block content
+  .w3-container
+    h3 Lista de Atores (#{atores.length})
+    table.w3-table-all.w3-hoverable
+      tr.w3-teal
+        th Id
+        th Nome
+        th Numero de filmes
+      each a in atores
+        tr(onclick=`window.location='/atores/${a.id}'` style="cursor:pointer;")
+          td= a.id
+          td= a.nome
+          td= a.numFilmes

@@ -1,0 +1,37 @@
+extends layout.pug
+
+block content
+  .w3-container
+    .w3-card-4
+      header.w3-container.w3-teal
+        h3 #{filme.title}
+      .w3-container
+        p
+          b Id:
+          |  #{filme.id}
+        p
+          b Ano:
+          |  #{filme.year}
+
+        h4 Elenco (#{(filme.cast && filme.cast.length) ? filme.cast.length : 0})
+        if filme.cast && filme.cast.length
+          ul.w3-ul
+            each a in filme.cast
+              li
+                if a && a.id
+                  a(href=`/atores/${a.id}`)= a.nome
+                else
+                  | #{a.nome}
+        else
+          p Sem elenco associado.
+
+        h4 Generos (#{(filme.genres && filme.genres.length) ? filme.genres.length : 0})
+        if filme.genres && filme.genres.length
+          ul.w3-ul
+            each g in filme.genres
+              li= g.nome
+        else
+          p Sem generos associados.
+
+        p
+          a.w3-button.w3-teal.w3-round-large(href='/filmes') Voltar aos filmes

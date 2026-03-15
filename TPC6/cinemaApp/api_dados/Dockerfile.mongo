@@ -1,0 +1,6 @@
+FROM mongo:latest
+# Copia os ficheiros para dentro da imagem durante o build
+COPY filmes.json /docker-entrypoint-initdb.d/
+COPY atores.json /docker-entrypoint-initdb.d/
+COPY generos.json /docker-entrypoint-initdb.d/
+COPY mongo-init/import.sh /docker-entrypoint-initdb.d/
