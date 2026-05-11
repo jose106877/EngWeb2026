@@ -1,0 +1,58 @@
+doctype html
+html(lang='pt')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title AEEUM | Protótipo
+    link(rel='preconnect' href='https://fonts.googleapis.com')
+    link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin)
+    link(
+      href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700&family=Playfair+Display:wght@600;700;800&family=Sora:wght@600;700;800&display=swap'
+      rel='stylesheet'
+    )
+    link(rel='stylesheet' href='/static/stylesheets/base.css')
+    link(rel='stylesheet' href='/static/stylesheets/layout.css')
+    link(rel='stylesheet' href='/static/stylesheets/hero.css')
+    link(rel='stylesheet' href='/static/stylesheets/buttons.css')
+    link(rel='stylesheet' href='/static/stylesheets/cards.css')
+    link(rel='stylesheet' href='/static/stylesheets/sobre.css')
+    link(rel='stylesheet' href='/static/stylesheets/historia.css')
+    link(rel='stylesheet' href='/static/stylesheets/equipa.css')
+    link(rel='stylesheet' href='/static/stylesheets/departamentos.css')
+    link(rel='stylesheet' href='/static/stylesheets/atividades.css')
+    link(rel='stylesheet' href='/static/stylesheets/documentos.css')
+    link(rel='stylesheet' href='/static/stylesheets/presidentes.css')
+    link(rel='stylesheet' href='/static/stylesheets/socios.css')
+    link(rel='stylesheet' href='/static/stylesheets/forms.css')
+    link(rel='stylesheet' href='/static/stylesheets/footer.css')
+    //- responsive.css tem de ficar no final para garantir que as media queries dão override ao resto
+    link(rel='stylesheet' href='/static/stylesheets/responsive.css')
+  body
+    block content
+    script.
+      window.departments     = !{JSON.stringify(departamentos)};
+      window.pessoas         = !{JSON.stringify(pessoas)};
+      window.patrocinadores  = !{JSON.stringify(patrocinadores)};
+      window.textoSolto      = !{JSON.stringify(textoSolto)};
+      window.anossahistoria  = !{JSON.stringify(anossahistoria)};
+      window.activities      = !{JSON.stringify(atividades)};
+      window.regulations     = !{JSON.stringify(regulamentos)};
+      window.activityFilters = [];
+      window.posts           = [];
+    script(src='/static/javascripts/data.js')
+    script(src='/static/javascripts/shared.js')
+    script(src='/static/javascripts/scroll.js')
+    script(src='/static/javascripts/scroll-recovery.js')
+    script(src='/static/javascripts/quick-nav.js')
+    script(src='/static/javascripts/team.js')
+    script(src='/static/javascripts/departments.js')
+    script(src='/static/javascripts/activities.js')
+    script(src='/static/javascripts/support.js')
+    script(src='/static/javascripts/documents.js')
+    script(src='/static/javascripts/presidents.js')
+    script(src='/static/javascripts/history.js')
+    script(src='/static/javascripts/reveal.js')
+    script(src='/static/javascripts/hero.js')
+    script(src='/static/javascripts/lanyard.js')
+    //- app.js chama o resto — tem de ser no final
+    script(src='/static/javascripts/app.js')

@@ -1,0 +1,32 @@
+header.w3-black.admin-navbar
+
+  .navbar-inner
+
+    h1.nav-title Página de Administração
+
+    button.w3-button.w3-black.w3-hide-medium.w3-hide-large#hamburger
+      | ☰
+
+    nav.nav-links.w3-hide-small
+      a.w3-button(href="/admin/a_nossa_historia") A Nossa História
+      a.w3-button(href="/admin/atividades") Atividades
+      a.w3-button(href="/admin/departamentos") Departamentos
+      a.w3-button(href="/admin/patrocinadores") Patrocinadores
+      a.w3-button(href="/admin/regulamentos") Regulamentos
+      a.w3-button(href="/admin/texto_solto") Textos
+
+    if adminUser
+      .nav-meta.w3-hide-small
+        span.nav-user= adminUser.nome || adminUser.username
+        a.w3-button.nav-logout(href="/users/logout") Sair
+
+
+#mobileMenu.w3-bar-block.w3-black.w3-hide.w3-hide-medium.w3-hide-large
+  a.w3-bar-item.w3-button(href="/admin/a_nossa_historia") A Nossa História
+  a.w3-bar-item.w3-button(href="/admin/atividades") Atividades
+  a.w3-bar-item.w3-button(href="/admin/departamentos") Departamentos
+  a.w3-bar-item.w3-button(href="/admin/patrocinadores") Patrocinadores
+  a.w3-bar-item.w3-button(href="/admin/regulamentos") Regulamentos
+  a.w3-bar-item.w3-button(href="/admin/texto_solto") Textos
+  if adminUser
+    a.w3-bar-item.w3-button(href="/users/logout") Sair

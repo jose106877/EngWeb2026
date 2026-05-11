@@ -1,0 +1,149 @@
+openapi: 3.0.3
+info:
+  title: AEEUM Auth API
+  version: 1.0.0
+  description: Serviço de autenticação e gestão de utilizadores da AEEUM.
+servers:
+  - url: /users
+security:
+  - bearerAuth: []
+paths:
+  /login:
+    post:
+      security: []
+      summary: Autenticar utilizador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login efetuado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "400":
+          description: Dados obrigatórios em falta.
+        "401":
+          description: Credenciais inválidas.
+  /logout:
+    get:
+      security: []
+      summary: Terminar sessão
+      responses:
+        "200":
+          description: Sessão terminada.
+  /:
+    get:
+      summary: Listar utilizadores
+      responses:
+        "200":
+          description: Lista de utilizadores sem passwords.
+    post:
+      summary: Criar utilizador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "201":
+          description: Utilizador criado.
+        "409":
+          description: Utilizador já existe.
+  /{_id}:
+    get:
+      summary: Consultar utilizador
+      parameters:
+        - $ref: "#/components/parameters/UserId"
+      responses:
+        "200":
+          description: Utilizador encontrado.
+        "404":
+          description: Utilizador não encontrado.
+    put:
+      summary: Atualizar utilizador
+      parameters:
+        - $ref: "#/components/parameters/UserId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "200":
+          description: Utilizador atualizado.
+    delete:
+      summary: Remover utilizador
+      parameters:
+        - $ref: "#/components/parameters/UserId"
+      responses:
+        "200":
+          description: Utilizador removido.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    UserId:
+      name: _id
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+    LoginResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        nome:
+          type: string
+        role:
+          type: string
+          enum: [admin, consumidor]
+        privacidade:
+          type: string
+        filiacao:
+          type: string
+        nivel_acesso:
+          type: integer
+        ativo:
+          type: boolean
+    UserInput:
+      allOf:
+        - $ref: "#/components/schemas/User"
+        - type: object
+          properties:
+            password:
+              type: string
+              format: password

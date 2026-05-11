@@ -1,0 +1,49 @@
+doctype html
+html(lang='pt')
+  head
+    title Login | Administração AEEUM
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='icon' href='/favicon.png')
+    link(rel='preconnect' href='https://fonts.googleapis.com')
+    link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin)
+    link(href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap' rel='stylesheet')
+    link(rel='stylesheet' href='/static/stylesheets/admin.css')
+
+  body.admin-login-page
+    .admin-login-shell
+      .admin-login-card.w3-card-4
+        .admin-login-card-header
+          p.admin-login-eyebrow Área Protegida
+          h1 Administração AEEUM
+          p.admin-login-copy Introduza as credenciais de administrador para aceder ao painel de gestão.
+
+        if error
+          .w3-panel.w3-pale-red.w3-leftbar.w3-border-red
+            p.w3-margin-top.w3-margin-bottom= error
+
+        form.admin-login-form(method='post' action='/users/login')
+          input(type='hidden' name='redirect' value=redirectTo)
+
+          .w3-margin-bottom
+            label.w3-label(for='username') Utilizador
+            input#username.w3-input(
+              type='text',
+              name='username',
+              value=(formData && formData.username) || '',
+              autocomplete='username',
+              required
+            )
+
+          .w3-margin-bottom
+            label.w3-label(for='password') Palavra-passe
+            input#password.w3-input(
+              type='password',
+              name='password',
+              autocomplete='current-password',
+              required
+            )
+
+          .admin-login-actions
+            button.w3-button.w3-black(type='submit') Entrar
+            a.w3-button.w3-light-grey(href='/') Voltar ao site

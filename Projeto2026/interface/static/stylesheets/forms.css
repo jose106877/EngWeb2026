@@ -1,0 +1,80 @@
+/* forms.css
+ * Forms: .text-link utility and .support-form.
+ */
+
+.text-link {
+  margin-top: 12px;
+  display: inline-block;
+  color: var(--brand);
+  font-weight: 700;
+}
+
+.support-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.support-form label {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+  font-family: var(--font-subtitle);
+}
+
+.support-form input,
+.support-form textarea {
+  font: inherit;
+  padding: 10px 11px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.support-form textarea {
+  resize: vertical;
+}
+
+.support-form button[disabled] {
+  opacity: 0.72;
+  cursor: wait;
+}
+
+.support-form label:nth-child(4) {
+  grid-column: 1 / -1;
+}
+
+.support-form button,
+.form-feedback {
+  grid-column: 1 / -1;
+}
+
+.form-feedback {
+  min-height: 20px;
+  color: var(--brand-dark);
+  font-weight: 700;
+}
+
+.form-feedback[data-state="loading"] {
+  color: var(--ink-soft);
+}
+
+.form-feedback[data-state="success"] {
+  color: #2f7a47;
+}
+
+.form-feedback[data-state="error"] {
+  color: #b13c33;
+}
+
+@media (max-width: 700px) {
+  .support-form {
+    grid-template-columns: 1fr;
+  }
+
+  .support-form label:nth-child(4),
+  .support-form button,
+  .form-feedback {
+    grid-column: 1;
+  }
+}

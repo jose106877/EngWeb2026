@@ -1,0 +1,96 @@
+services:
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway_aeeum
+    ports:
+      - "7789:80"
+    depends_on:
+      - interface
+      - api
+      - auth
+    networks:
+      - aeeum-network
+
+  mongodb:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    container_name: mongodb_aeeum
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - aeeum-network
+
+  api:
+    build:
+      context: ./api_dados
+      dockerfile: Dockerfile
+    container_name: api_aeeum
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/aeeum
+      - JWT_SECRET=${JWT_SECRET:-secret_default_2026}
+      - COOKIE_NAME=${COOKIE_NAME:-auth_token}
+      - IG_PUBLIC_USERNAME=${IG_PUBLIC_USERNAME:-}
+      - IG_PUBLIC_LIMIT=${IG_PUBLIC_LIMIT:-30}
+      - IG_GRAPH_ACCESS_TOKEN=${IG_GRAPH_ACCESS_TOKEN:-}
+      - IG_GRAPH_USER_ID=${IG_GRAPH_USER_ID:-}
+      - IG_GRAPH_LIMIT=${IG_GRAPH_LIMIT:-}
+      - SUPPORT_EMAIL_TO=${SUPPORT_EMAIL_TO:-}
+      - SUPPORT_EMAIL_FROM=${SUPPORT_EMAIL_FROM:-}
+      - SMTP_URL=${SMTP_URL:-}
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_PORT=${SMTP_PORT:-587}
+      - SMTP_SECURE=${SMTP_SECURE:-false}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASS=${SMTP_PASS:-}
+    volumes:
+      - ./media:/app/media
+    depends_on:
+      - mongodb
+    networks:
+      - aeeum-network
+
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    container_name: auth_aeeum
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/aeeum
+      - JWT_SECRET=${JWT_SECRET:-secret_default_2026}
+      - COOKIE_NAME=${COOKIE_NAME:-auth_token}
+    depends_on:
+      - mongodb
+    networks:
+      - aeeum-network
+
+  interface:
+    build:
+      context: ./interface
+      dockerfile: Dockerfile
+    container_name: interface_aeeum
+    expose:
+      - "7789"
+    environment:
+      - API_URL=http://gateway
+      - AUTH_URL=http://gateway/auth
+      - JWT_SECRET=${JWT_SECRET:-secret_default_2026}
+      - COOKIE_NAME=${COOKIE_NAME:-auth_token}
+      - ADMIN_DISPLAY_NAME=${ADMIN_DISPLAY_NAME:-Administração AEEUM}
+    volumes:
+      - ./media/documentos:/app/media/documentos:ro
+    depends_on:
+      - api
+      - auth
+    networks:
+      - aeeum-network
+
+networks:
+  aeeum-network:
+    driver: bridge
+
+volumes:
+  mongo_data:

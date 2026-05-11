@@ -1,0 +1,9 @@
+api_dados/node_modules/*
+api_dados/node_modules
+api_dados/package-lock.json
+
+interface/node_modules/*
+interface/node_modules
+interface/package-lock.json
+auth/node_modules/*
+auth/node_modules

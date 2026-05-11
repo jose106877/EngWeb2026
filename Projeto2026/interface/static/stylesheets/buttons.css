@@ -1,0 +1,39 @@
+/* buttons.css
+ * Button components: .btn, .btn-primary, .btn-secondary.
+ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.94rem;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: linear-gradient(125deg, var(--brand), var(--brand-dark));
+  color: #2d2108;
+  box-shadow: 0 10px 24px rgba(55, 44, 16, 0.24);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: #f4f7fc;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+

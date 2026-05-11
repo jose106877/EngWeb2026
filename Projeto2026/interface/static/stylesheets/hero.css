@@ -1,0 +1,287 @@
+/* hero.css
+ * Hero header, main nav, quick-glass sticky nav and hero entry animation.
+ */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-bottom: 0;
+  overflow: hidden;
+  overflow: clip;
+  isolation: isolate;
+  --shift-x: 0px;
+  --shift-y: 0px;
+}
+
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      125deg,
+      rgba(12, 18, 26, 0.78) 0%,
+      rgba(25, 34, 47, 0.66) 52%,
+      rgba(71, 54, 21, 0.62) 100%
+    ),
+    url("https://static.wixstatic.com/media/174c5b_a81cac3e596e42d4b02ff0d23335aa37~mv2.jpg/v1/fill/w_980,h_964,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/174c5b_a81cac3e596e42d4b02ff0d23335aa37~mv2.jpg");
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.08)
+    translate3d(calc(var(--shift-x) * -0.55), calc(var(--shift-y) * -0.55), 0);
+  transition: transform 120ms linear, filter 260ms ease;
+  filter: saturate(1.03) contrast(1.05);
+}
+
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero::before {
+  width: 360px;
+  height: 360px;
+  background: rgba(224, 168, 39, 0.65);
+  top: -130px;
+  right: -80px;
+  transform: translate3d(calc(var(--shift-x) * -0.25), calc(var(--shift-y) * -0.25), 0);
+  transition: transform 140ms linear, opacity 240ms ease;
+}
+
+.hero::after {
+  width: 420px;
+  height: 420px;
+  background: rgba(185, 197, 216, 0.45);
+  filter: blur(4px);
+  bottom: -260px;
+  left: -100px;
+  transform: translate3d(calc(var(--shift-x) * 0.2), calc(var(--shift-y) * 0.2), 0);
+  transition: transform 140ms linear, opacity 240ms ease;
+}
+
+/* Hero content layers that move with the cursor */
+.nav-wrap,
+.hero-content {
+  position: relative;
+  z-index: 2;
+  transition: transform 120ms linear;
+}
+
+.nav-wrap {
+  transform: translate3d(calc(var(--shift-x) * 0.16), calc(var(--shift-y) * 0.16), 0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 0;
+}
+
+.logo {
+  font-family: var(--font-title);
+  font-size: 1.7rem;
+  color: #fff;
+}
+
+.nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav a {
+  color: #edf2fb;
+  font-weight: 600;
+  word-spacing: 0.08em;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav a:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.quick-glass-nav {
+  position: fixed;
+  top: clamp(12px, 2.4vh, 24px);
+  right: clamp(12px, 2.3vw, 28px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  gap: 6px;
+  max-width: min(92vw, 780px);
+  padding: 8px 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(233, 240, 248, 0.46);
+  box-shadow:
+    0 8px 32px rgba(255, 254, 222, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  overflow-x: auto;
+  scrollbar-width: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(0, -12px, 0) scale(0.97);
+  transition:
+    opacity 220ms ease,
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 220ms ease;
+}
+
+.quick-glass-nav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  pointer-events: none;
+}
+
+.quick-glass-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.quick-glass-nav.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.quick-glass-nav a {
+  white-space: nowrap;
+  font-size: 0.78rem;
+  word-spacing: 0.08em;
+  color: #0f1620;
+}
+
+.quick-glass-nav a:hover,
+.quick-glass-nav a:focus-visible {
+  color: #0b1119;
+  border-color: rgba(151, 161, 174, 0.6);
+  background: rgba(151, 161, 174, 0.22);
+}
+
+.quick-glass-nav a.is-active {
+  border-color: rgba(255, 255, 255, 0.56);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.quick-glass-nav a.is-active:hover,
+.quick-glass-nav a.is-active:focus-visible {
+  border-color: rgba(151, 161, 174, 0.66);
+  background: rgba(151, 161, 174, 0.28);
+}
+
+.hero-content {
+  color: white;
+  margin-top: auto;
+  padding-top: clamp(20px, 5vh, 46px);
+  padding-bottom: clamp(36px, 8vh, 78px);
+  max-width: 760px;
+  transform: translate3d(calc(var(--shift-x) * 0.4), calc(var(--shift-y) * 0.4), 0);
+}
+
+.hero-tag {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f4d17d;
+  font-family: var(--font-subtitle);
+}
+
+.hero-title {
+  margin: 16px 0;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+}
+
+.hero-lead {
+  color: #dbe5f4;
+  font-size: 1.05rem;
+  max-width: 65ch;
+  font-family: var(--font-subtitle);
+}
+
+.hero.is-hovering .hero-gradient {
+  filter: saturate(1.1) contrast(1.08);
+}
+
+.hero-actions {
+  margin-top: 28px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Hero entry animation (text appears on first load) */
+.hero.hero-entry .hero-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hero.hero-entry .hero-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-0.72em) scale(0.94);
+  filter: blur(5px);
+}
+
+.hero.hero-entry .hero-lead,
+.hero.hero-entry .hero-actions {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+.hero.hero-entry.hero-entry-ready .hero-char {
+  animation: heroCharIn 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--char-index) * 26ms + var(--line-delay, 0ms));
+}
+
+.hero.hero-entry.hero-entry-ready .hero-lead {
+  animation: heroBlockIn 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 780ms;
+}
+
+.hero.hero-entry.hero-entry-ready .hero-actions {
+  animation: heroBlockIn 640ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 920ms;
+}
+
+@keyframes heroCharIn {
+  from {
+    opacity: 0;
+    transform: translateX(-0.72em) scale(0.94);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes heroBlockIn {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+

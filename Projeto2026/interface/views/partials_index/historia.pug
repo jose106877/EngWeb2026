@@ -1,0 +1,101 @@
+section#historia.section.alt-bg.screen-page.reveal
+  .history-shell
+    .history-topbar
+      div
+        h2.history-page-title.section-title
+          span.title-word A
+          span.title-word Nossa
+          span.title-word.title-word-accent História
+        .history-page-line(aria-hidden='true')
+
+    .history-columns
+
+      .history-team-col.history-letter-col.aeeum-scroll
+        .history-letter-stack
+          .history-letter-sheet.history-letter-sheet-back2(aria-hidden='true')
+          .history-letter-sheet.history-letter-sheet-back1(aria-hidden='true')
+
+          article.history-letter-sheet.history-letter-sheet-main(aria-label='Carta da direção da AEEUM')
+            header.history-letter-head
+              div
+                p.history-letter-org AEEUM
+                .history-letter-divider(aria-hidden='true')
+            != textoSolto.carta_comunidade
+            .history-letter-signature
+              p.history-letter-signature-name A Direção
+              p.history-letter-signature-year AEEUM
+
+            .history-letter-seal(aria-hidden='true')
+              span AE
+
+      aside.history-right-col
+
+        section.history-team-panel.history-photos-panel
+          -
+            var fotosHistoria = []
+            var historiaLista = anossahistoria || []
+            for (var i = 0; i < historiaLista.length; i += 1) {
+              var item = historiaLista[i] || {}
+              var ano = String(item.ano || '').trim()
+              var imagem = item.imagem || item.link || null
+
+              if (ano && imagem) {
+                fotosHistoria.push({ ano: ano, imagem: imagem })
+              }
+            }
+
+            fotosHistoria.sort(function(a, b) {
+              return Number(b.ano) - Number(a.ano)
+            })
+
+            var fotoInicial = fotosHistoria.length ? fotosHistoria[0] : null
+
+          .history-team-head
+            h3.history-team-title.section-title
+              span.title-word Fotos
+              span.title-word da
+              span.title-word.title-word-accent Equipa
+              span.title-word por
+              span.title-word Ano
+
+          #history-team-grid.history-team-grid
+            each item in anossahistoria
+              article.history-photo-card(data-year=item.ano)
+                .history-photo-media
+                  img(src=item.link alt=`Equipa ${item.ano}`)
+                p.history-photo-caption Foto oficial da equipa da AEEUM #{item.ano}
+
+          #history-year-chips.history-year-chips(aria-label='Selecionar ano')
+            each item, index in anossahistoria
+              button.history-year-chip(
+                type='button'
+                data-year-target=item.ano
+                class=index === 0 ? 'is-active' : ''
+              ) #{item.ano}
+
+        section.history-timeline-card
+          .history-timeline-top
+            .history-year-display
+              span#history-active-year.history-year-number 2008
+              .history-year-line
+            p.history-timeline-hint(aria-hidden='true')
+              span.history-timeline-hint-arrow ↕
+              |  Desliza a timeline para navegar pelos anos
+
+          #history-timeline-scroll.history-timeline-scroll.aeeum-scroll
+            .history-spacer.history-spacer-top(aria-hidden='true')
+          
+            each item, index in anossahistoria
+              article.history-event-item(
+                data-year=item.ano
+                class=index === 0 ? 'is-active' : ''
+              )
+                .history-dot-col
+                  .history-dot
+                  if index !== anossahistoria.length - 1
+                    .history-connector
+          
+                .history-event-content
+                  h3.history-event-title #{item.ano}
+          
+            .history-spacer.history-spacer-bottom(aria-hidden='true')

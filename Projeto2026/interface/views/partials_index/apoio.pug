@@ -1,0 +1,26 @@
+section#apoio.section.alt-bg.reveal
+  .container
+    .section-head
+      div
+        h2.section-title
+          span.title-word Apoio
+          span.title-word ao
+          span.title-word.title-word-accent Aluno
+        .history-page-line.section-title-line(aria-hidden='true')
+      p Canal para pedidos e sugestões com resposta da equipa.
+
+    form#support-form.support-form
+      label
+        | Nome
+        input(type='text' name='nome' required placeholder='O teu nome')
+      label
+        | Email
+        input(type='email' name='email' required placeholder='nome@exemplo.pt')
+      label
+        | Assunto
+        input(type='text' name='assunto' required placeholder='Ex: Pedido de esclarecimento')
+      label
+        | Mensagem
+        textarea(name='mensagem' rows='4' required placeholder='Escreve aqui o teu pedido ou sugestão')
+      button.btn.btn-primary(type='submit') Enviar Pedido
+      p#form-feedback.form-feedback(aria-live='polite')

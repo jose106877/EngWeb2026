@@ -1,0 +1,86 @@
+/* layout.css
+ * Page layout primitives: .container, .section, .section-head, shared typography.
+ */
+
+.container {
+  width: min(1140px, 92vw);
+  margin: 0 auto;
+}
+
+.section {
+  padding: 78px 0;
+}
+
+.screen-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.alt-bg {
+  background: linear-gradient(170deg, rgba(212, 160, 43, 0.08), rgba(248, 251, 255, 0.88));
+  border-block: 1px solid rgba(200, 212, 228, 0.65);
+}
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.section-head h2 {
+  font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+}
+
+.section-head > p {
+  max-width: 520px;
+  color: var(--ink-soft);
+  font-family: var(--font-subtitle);
+}
+
+.section-copy {
+  margin-top: 10px;
+  max-width: 52ch;
+  color: var(--ink-soft);
+  font-family: var(--font-subtitle);
+}
+
+.hero-tag,
+.hero-lead,
+.teamv2-label,
+.teamv2-subtitle,
+.teamv2-neutral-sub,
+.teamv2-neutral-hint,
+.teamv2-dept-label,
+.history-page-subtitle,
+.history-team-kicker,
+.history-team-hint,
+.history-timeline-hint,
+.gallery-post-department,
+.docs-filter-status,
+.support-form label {
+  font-family: var(--font-subtitle);
+}
+
+.section-title {
+  line-height: 1.08;
+}
+
+.section-title .title-word {
+  display: inline-block;
+  color: var(--ink);
+}
+
+.section-title .title-word + .title-word {
+  margin-left: 0.26em;
+}
+
+.section-title .title-word-accent {
+  color: var(--brand);
+}
+
+/* Hero/Landing: image background + cursor parallax */

@@ -1,0 +1,23 @@
+section#voluntarios.container.section.reveal
+  -
+    const linkVoluntario = textoSolto?.["link-voluntario"] || "#voluntarios";
+    const guiaVoluntario = (regulamentos || []).find((documento) => /guia do volunt[aá]rio/i.test(documento?.nome || ""));
+    const guiaVoluntarioLink = guiaVoluntario?.link || guiaVoluntario?.ficheiro || "#documentos";
+  .section-head
+    div
+      h2 Voluntários
+      .history-page-line.section-title-line(aria-hidden='true')
+    p Guia de integração e candidatura.
+
+  .card-grid
+    article.glass-card
+      h3 Guia do Voluntário
+      p.
+        Documento com responsabilidades, onboarding e calendário de
+        atividades.
+      a.text-link(href=guiaVoluntarioLink target='_blank' rel='noopener noreferrer') Abrir Guia
+
+    article.glass-card
+      h3 Candidatura
+      p Entrada rápida para formulário de inscrição e motivação.
+      a.text-link(href=linkVoluntario target='_blank' rel='noopener noreferrer') Ir para Forms

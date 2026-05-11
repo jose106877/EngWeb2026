@@ -1,0 +1,112 @@
+extends admin_layout
+
+block content
+  .w3-container.w3-padding
+    h3 A Nossa História
+    p.w3-margin-bottom Adicione anos novos, edite ou remova anos antigos:
+
+    .admin-actions.w3-margin-bottom
+      a.w3-button.w3-blue.w3-small(
+        href='/admin/a_nossa_historia/pagina_novo'
+      ) + Adicionar Ano
+      a.w3-button.w3-white.w3-border.w3-small.w3-margin-left(
+        href='/api/packages/export/anossahistoria'
+      ) Exportar
+      form#sipImportForm.admin-import-form.admin-actions-spacer(
+        enctype='multipart/form-data'
+      )
+        input#sipImportInput.w3-input.w3-small.admin-import-input(
+          type='file',
+          name='sip',
+          accept='.zip,application/zip',
+          required
+        )
+        button.w3-button.w3-green.w3-small(type='submit') Importar
+
+    // Tabela com estilo melhorado
+    table.w3-table.w3-striped.w3-bordered.w3-hoverable
+      thead
+        tr.w3-light-grey
+          th.w3-padding-small Ano
+          th.w3-padding-small Foto
+          th.w3-padding-small Operações
+      tbody
+        each item in aNossaHistoria
+          tr
+            td.w3-padding-small= item.ano
+            td.w3-padding-small
+              if item.link
+                img.w3-image(
+                  src=item.link,
+                  alt="Foto de " + item.ano,
+                  class='admin-history-image'
+                )
+              else
+                span.w3-text-grey (Sem imagem)
+            td.w3-padding-small
+
+              a.w3-button.w3-blue.w3-small.w3-margin-right(href='/admin/a_nossa_historia/pagina_edicao?_id=' + item._id,title="Editar") Editar
+              a.w3-button.w3-white.w3-border.w3-small.w3-margin-right(href='/api/packages/export/anossahistoria/' + item._id,title="Exportar") Exportar
+              a.w3-button.w3-red.w3-small( type="button" onclick=`apagarItem('${item._id}')`) Apagar
+
+  script.
+    async function apagarItem(id) 
+    {
+      if(!confirm('Tem a certeza que quer apagar este item?')) 
+        return;
+      const response = await fetch('/admin/a_nossa_historia/apagar?_id=' + id, { method: 'DELETE' });
+      if(response.status === 401)
+      {
+        try
+        {
+          const data = await response.json();
+          if(data?.redirectTo)
+          {
+            window.location.href = data.redirectTo;
+            return;
+          }
+        }catch(error){
+        }
+      }
+      if(!response.ok)
+      {
+        alert('Não foi possível apagar o registo.');
+        return;
+      }
+      location.reload();
+    }
+
+    const sipImportForm = document.getElementById('sipImportForm');
+    if(sipImportForm)
+    {
+      sipImportForm.addEventListener('submit', async (event) =>
+      {
+        event.preventDefault();
+        const input = document.getElementById('sipImportInput');
+        if(!input?.files?.[0])
+          return;
+
+        const data = new FormData();
+        data.append('sip', input.files[0]);
+
+        const response = await fetch('/api/packages/import/anossahistoria', {
+          method: 'POST',
+          body: data
+        });
+
+        if(!response.ok)
+        {
+          let message = 'Não foi possível importar.';
+          try
+          {
+            const error = await response.json();
+            message = error?.message || message;
+          }catch(error){
+          }
+          alert(message);
+          return;
+        }
+
+        location.reload();
+      });
+    }

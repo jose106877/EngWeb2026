@@ -1,0 +1,33 @@
+section#equipa.container.section.screen-page.reveal
+  .teamv2-shell
+    .teamv2-header
+      div
+        p.teamv2-label Departamentos
+        h2.teamv2-title.section-title
+          span.title-word A
+          span.title-word Nossa
+          br
+          span.title-word.title-word-accent Equipa
+
+    #team-tabs.teamv2-tabs(role='tablist' aria-label='Departamentos da equipa')
+
+    #team-neutral.teamv2-neutral
+      .teamv2-neutral-icon
+        svg(fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.5')
+          path(
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            d='M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z'
+          )
+      h3.teamv2-neutral-title.section-title
+        span.title-word Conhece
+        span.title-word a
+        span.title-word nossa
+        span.title-word.title-word-accent equipa
+      p.teamv2-neutral-sub Seleciona um departamento para veres quem faz parte dele.
+      .teamv2-neutral-hint
+        svg(fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='2.5')
+          path(stroke-linecap='round' stroke-linejoin='round' d='M4.5 15.75l7.5-7.5 7.5 7.5')
+        |  Escolhe um departamento acima
+
+    #team-panels.department-panel.department-panel-v2(hidden)

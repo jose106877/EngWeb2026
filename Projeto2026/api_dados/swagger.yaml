@@ -1,0 +1,630 @@
+openapi: 3.0.3
+info:
+  title: AEEUM API
+  version: 1.0.0
+  description: API de dados e autenticação da aplicação AEEUM.
+servers:
+  - url: /api
+security:
+  - bearerAuth: []
+tags:
+  - name: Atividades
+  - name: Departamentos
+  - name: Patrocinadores
+  - name: Pessoas
+  - name: Regulamentos
+  - name: Texto Solto
+  - name: A Nossa História
+  - name: Apoio ao Aluno
+paths:
+  /apoio-aluno:
+    post:
+      tags: [Apoio ao Aluno]
+      security: []
+      summary: Enviar pedido de apoio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupportRequest"
+      responses:
+        "200":
+          description: Pedido enviado.
+  /atividades-feed:
+    get:
+      tags: [Atividades]
+      security: []
+      summary: Obter feed público de atividades
+      responses:
+        "200":
+          description: Feed público.
+  /atividades:
+    get:
+      tags: [Atividades]
+      security: []
+      summary: Listar atividades
+      responses:
+        "200":
+          description: Lista de atividades.
+    post:
+      tags: [Atividades]
+      summary: Criar atividade
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/AtividadeInput"
+      responses:
+        "201":
+          description: Atividade criada.
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /atividades/instagram-media:
+    get:
+      tags: [Atividades]
+      summary: Listar media do Instagram para curadoria
+      responses:
+        "200":
+          description: Media disponível.
+  /atividades/import-instagram:
+    post:
+      tags: [Atividades]
+      summary: Importar atividades a partir do Instagram
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        "201":
+          description: Atividades importadas.
+  /atividades/{_id}:
+    get:
+      tags: [Atividades]
+      security: []
+      summary: Consultar atividade
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Atividade.
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      tags: [Atividades]
+      summary: Atualizar atividade
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/AtividadeInput"
+      responses:
+        "200":
+          description: Atividade atualizada.
+    delete:
+      tags: [Atividades]
+      summary: Apagar atividade
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Atividade removida.
+  /departamentos:
+    get:
+      tags: [Departamentos]
+      security: []
+      summary: Listar departamentos
+      responses:
+        "200":
+          description: Lista de departamentos.
+    post:
+      tags: [Departamentos]
+      summary: Criar departamento
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/DepartamentoInput"
+      responses:
+        "201":
+          description: Departamento criado.
+  /departamentos/{_id}:
+    get:
+      tags: [Departamentos]
+      security: []
+      summary: Consultar departamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Departamento.
+    put:
+      tags: [Departamentos]
+      summary: Atualizar departamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/DepartamentoInput"
+      responses:
+        "200":
+          description: Departamento atualizado.
+    delete:
+      tags: [Departamentos]
+      summary: Apagar departamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Departamento removido.
+  /departamentos/{_id}/pessoas:
+    get:
+      tags: [Departamentos]
+      security: []
+      summary: Listar pessoas de um departamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Pessoas do departamento.
+  /departamentos/{_id}/participantes:
+    get:
+      tags: [Departamentos]
+      security: []
+      summary: Listar participantes de um departamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Participantes do departamento.
+  /departamentos/{_id}/regulamentos:
+    get:
+      tags: [Departamentos]
+      security: []
+      summary: Listar regulamentos de um departamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Regulamentos do departamento.
+  /departamentos/{_id}/atividades:
+    get:
+      tags: [Departamentos]
+      security: []
+      summary: Listar atividades de um departamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Atividades do departamento.
+  /patrocinadores:
+    get:
+      tags: [Patrocinadores]
+      security: []
+      summary: Listar patrocinadores
+      responses:
+        "200":
+          description: Lista de patrocinadores.
+    post:
+      tags: [Patrocinadores]
+      summary: Criar patrocinador
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatrocinadorInput"
+      responses:
+        "201":
+          description: Patrocinador criado.
+  /patrocinadores/{_id}:
+    get:
+      tags: [Patrocinadores]
+      security: []
+      summary: Consultar patrocinador
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Patrocinador.
+    put:
+      tags: [Patrocinadores]
+      summary: Atualizar patrocinador
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/PatrocinadorInput"
+      responses:
+        "200":
+          description: Patrocinador atualizado.
+    delete:
+      tags: [Patrocinadores]
+      summary: Apagar patrocinador
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Patrocinador removido.
+  /pessoas:
+    get:
+      tags: [Pessoas]
+      security: []
+      summary: Listar pessoas
+      responses:
+        "200":
+          description: Lista de pessoas.
+    post:
+      tags: [Pessoas]
+      summary: Criar pessoa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pessoa"
+      responses:
+        "201":
+          description: Pessoa criada.
+  /pessoas/{_id}:
+    get:
+      tags: [Pessoas]
+      security: []
+      summary: Consultar pessoa
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Pessoa.
+    put:
+      tags: [Pessoas]
+      summary: Atualizar pessoa
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pessoa"
+      responses:
+        "200":
+          description: Pessoa atualizada.
+    delete:
+      tags: [Pessoas]
+      summary: Apagar pessoa
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Pessoa removida.
+  /regulamentos:
+    get:
+      tags: [Regulamentos]
+      security: []
+      summary: Listar regulamentos
+      responses:
+        "200":
+          description: Lista de regulamentos.
+    post:
+      tags: [Regulamentos]
+      summary: Criar regulamento
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/RegulamentoInput"
+      responses:
+        "201":
+          description: Regulamento criado.
+  /regulamentos/{_id}:
+    get:
+      tags: [Regulamentos]
+      security: []
+      summary: Consultar regulamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Regulamento.
+    put:
+      tags: [Regulamentos]
+      summary: Atualizar regulamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/RegulamentoInput"
+      responses:
+        "200":
+          description: Regulamento atualizado.
+    delete:
+      tags: [Regulamentos]
+      summary: Apagar regulamento
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Regulamento removido.
+  /texto-solto:
+    get:
+      tags: [Texto Solto]
+      security: []
+      summary: Consultar textos soltos
+      responses:
+        "200":
+          description: Textos soltos.
+    put:
+      tags: [Texto Solto]
+      summary: Atualizar textos soltos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TextoSolto"
+      responses:
+        "200":
+          description: Textos atualizados.
+  /texto-solto/slogan:
+    get:
+      tags: [Texto Solto]
+      security: []
+      summary: Consultar slogan
+      responses:
+        "200":
+          description: Slogan.
+  /texto-solto/carta-comunidade:
+    get:
+      tags: [Texto Solto]
+      security: []
+      summary: Consultar carta à comunidade
+      responses:
+        "200":
+          description: Carta à comunidade.
+  /texto-solto/vantagens-socio:
+    get:
+      tags: [Texto Solto]
+      security: []
+      summary: Consultar vantagens de sócio
+      responses:
+        "200":
+          description: Vantagens de sócio.
+  /texto-solto/link-voluntario:
+    get:
+      tags: [Texto Solto]
+      security: []
+      summary: Consultar link de candidatura para voluntários
+      responses:
+        "200":
+          description: Link de candidatura para voluntários.
+  /texto-solto/link-colaborador:
+    get:
+      tags: [Texto Solto]
+      security: []
+      summary: Consultar link de candidatura para colaboradores
+      responses:
+        "200":
+          description: Link de candidatura para colaboradores.
+  /anossahistoria:
+    get:
+      tags: [A Nossa História]
+      security: []
+      summary: Listar entradas de A Nossa História
+      responses:
+        "200":
+          description: Lista de entradas.
+    post:
+      tags: [A Nossa História]
+      summary: Criar entrada de A Nossa História
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ANossaHistoriaInput"
+      responses:
+        "201":
+          description: Entrada criada.
+  /anossahistoria/{_id}:
+    get:
+      tags: [A Nossa História]
+      security: []
+      summary: Consultar entrada de A Nossa História
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Entrada.
+    put:
+      tags: [A Nossa História]
+      summary: Atualizar entrada de A Nossa História
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ANossaHistoriaInput"
+      responses:
+        "200":
+          description: Entrada atualizada.
+    delete:
+      tags: [A Nossa História]
+      summary: Apagar entrada de A Nossa História
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Entrada removida.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    Id:
+      name: _id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Pedido inválido.
+    Unauthorized:
+      description: Autenticação necessária ou credenciais inválidas.
+    NotFound:
+      description: Recurso não encontrado.
+  schemas:
+    SupportRequest:
+      type: object
+      required: [nome, email, assunto, mensagem]
+      properties:
+        nome:
+          type: string
+        email:
+          type: string
+          format: email
+        assunto:
+          type: string
+        mensagem:
+          type: string
+    BaseEntity:
+      type: object
+      properties:
+        _id:
+          type: string
+        privacidade:
+          type: string
+          enum: [publico, privado]
+    AtividadeInput:
+      allOf:
+        - $ref: "#/components/schemas/BaseEntity"
+        - type: object
+          properties:
+            titulo:
+              type: string
+            link:
+              type: string
+            data:
+              type: string
+              format: date-time
+            nome_destaque:
+              type: string
+            mostrar_no_carrossel:
+              type: boolean
+            ordem_carrossel:
+              type: integer
+            imagem:
+              type: string
+              format: binary
+    DepartamentoInput:
+      allOf:
+        - $ref: "#/components/schemas/BaseEntity"
+        - type: object
+          properties:
+            nome:
+              type: string
+            descricao:
+              type: string
+            parte_da_direcao:
+              type: string
+            regulamentos:
+              type: array
+              items:
+                type: string
+            atividades:
+              type: array
+              items:
+                type: string
+            pessoas:
+              type: array
+              items:
+                type: string
+            participantes:
+              type: array
+              items:
+                type: object
+            imagem:
+              type: string
+              format: binary
+    PatrocinadorInput:
+      allOf:
+        - $ref: "#/components/schemas/BaseEntity"
+        - type: object
+          properties:
+            nome:
+              type: string
+            link:
+              type: string
+            imagem:
+              type: string
+              format: binary
+    Pessoa:
+      allOf:
+        - $ref: "#/components/schemas/BaseEntity"
+        - type: object
+          properties:
+            nome:
+              type: string
+            foto:
+              type: string
+            ano:
+              type: string
+            cargo:
+              type: string
+    RegulamentoInput:
+      allOf:
+        - $ref: "#/components/schemas/BaseEntity"
+        - type: object
+          properties:
+            nome:
+              type: string
+            ano:
+              type: string
+            departamento:
+              type: string
+            ficheiro:
+              type: string
+              format: binary
+    TextoSolto:
+      type: object
+      properties:
+        slogan:
+          type: string
+        carta_comunidade:
+          type: string
+        link-voluntario:
+          type: string
+        link-colaborador:
+          type: string
+        vantagens_socio:
+          type: array
+          items:
+            type: object
+            properties:
+              texto:
+                type: string
+    ANossaHistoriaInput:
+      allOf:
+        - $ref: "#/components/schemas/BaseEntity"
+        - type: object
+          properties:
+            ano:
+              type: string
+            imagem:
+              type: string
+              format: binary

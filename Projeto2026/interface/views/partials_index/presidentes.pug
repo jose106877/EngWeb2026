@@ -1,0 +1,40 @@
+section#antigos-presidentes.container.section.screen-page.reveal
+  .section-head
+    div
+      h2.section-title
+        span.title-word Antigos
+        span.title-word.title-word-accent Presidentes
+      .history-page-line.section-title-line(aria-hidden='true')
+    p Clica num nome para ver o destaque e mandato.
+
+  #presidents-showcase.presidents-showcase.has-active-president
+
+    .presidents-list(aria-label='Lista de antigos presidentes')
+      each presidente, index in antigosPresidentes
+        button.president-row(
+          type='button'
+          data-name=presidente.nomeCompleto
+          data-mandate=presidente.ano
+          data-image=presidente.foto
+          data-order=String(index + 1).padStart(2, '0')
+          aria-selected=index === 0 ? 'true' : 'false'
+          class=index === 0 ? 'is-active' : ''
+        )
+          span.president-row-name= presidente.nomeCompleto
+          span.president-row-badge= presidente.ano
+          span.president-row-mark(aria-hidden='true')= index === 0 ? '×' : '+'
+
+    aside.president-detail(aria-live='polite' aria-hidden='false')
+      #president-photo-card.president-photo-card
+        .president-photo-shell
+          - var primeiro = antigosPresidentes[0]
+          img#president-detail-image(
+            src=primeiro ? primeiro.foto : ''
+            alt=primeiro ? 'Foto de ' + primeiro.nomeCompleto : ''
+            loading='lazy'
+            decoding='async'
+          )
+        .president-detail-meta
+          .president-detail-copy
+            h3#president-detail-name= primeiro ? primeiro.nomeCompleto : ''
+          p#president-detail-order.president-order-num(aria-label='Ano de mandato')= primeiro ? primeiro.ano : ''

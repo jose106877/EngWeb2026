@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title Administração
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='icon' href='/favicon.png')
+    link(rel='preconnect' href='https://fonts.googleapis.com')
+    link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin)
+    link(href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap' rel='stylesheet')
+    link(rel='stylesheet' href='/static/stylesheets/admin.css')
+    link(rel='stylesheet' href='/static/stylesheets/admin_navbar.css')
+    link(rel='stylesheet' href='/static/stylesheets/admin_collection.css')
+    link(rel='stylesheet' href='/static/stylesheets/admin_entity_form.css')
+    link(rel='stylesheet' href='/static/stylesheets/admin_history.css')
+
+  body
+    include partials_admin/admin_navbar
+
+    block content
+
+    footer.w3-container.w3-black.w3-margin-top.w3-padding
+      a.w3-button.w3-white(href='/') Voltar
+
+    script(src='/static/javascripts/admin_navbar.js')

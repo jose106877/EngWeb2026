@@ -1,0 +1,209 @@
+extends admin_layout
+
+block content
+  .w3-container.w3-padding
+    .w3-card-4.w3-padding.w3-margin-bottom
+      h1.w3-margin-bottom= form.title
+      if form.description
+        p.w3-text-grey.w3-margin-bottom= form.description
+
+      if form.summary && form.summary.length
+        .w3-row-padding.w3-margin-bottom
+          each item in form.summary
+            .w3-third.w3-margin-bottom
+              .w3-panel.w3-light-grey.w3-padding
+                h6.w3-margin-top= item.label
+                p.w3-margin-bottom= item.value
+
+      if form.showInstagramPicker
+        section#adminInstagramPicker.admin-instagram-picker.w3-panel.w3-border.w3-pale-blue.w3-margin-bottom(
+          aria-label="Importar publicações do Instagram"
+        )
+          h2.w3-medium Importar do Instagram
+          p.w3-small.w3-text-grey
+            | Carrega as publicações recentes da conta pública configurada no servidor (IG_PUBLIC_USERNAME).
+            | Seleciona uma para preencher o formulário abaixo ou várias para criar atividades de uma vez.
+          p#adminInstagramPickerStatus.w3-small(aria-live="polite")
+          .admin-instagram-picker-actions.w3-margin-top
+            button#adminInstagramLoad.w3-button.w3-blue.w3-small(type="button") Carregar publicações
+            button#adminInstagramPrefill.w3-button.w3-white.w3-border.w3-small.w3-margin-left(
+              type="button"
+              disabled
+            ) Preencher formulário (1.ª selecionada)
+            button#adminInstagramImport.w3-button.w3-green.w3-small.w3-margin-left(
+              type="button"
+              disabled
+            ) Importar selecionadas
+          #adminInstagramPickerResults.admin-instagram-picker-results
+
+      form#adminEntityForm
+        each field in form.fields
+          .w3-margin-bottom
+            label.w3-label(for=field.name)
+              = field.label
+              if field.required
+                |  *
+
+            case field.type
+              when 'textarea'
+                textarea.w3-input(
+                  id=field.name,
+                  name=field.name,
+                  rows=field.rows || 5,
+                  placeholder=field.placeholder || '',
+                  required=field.required
+                )= field.value
+              when 'select'
+                select.w3-select(
+                  id=field.name,
+                  name=field.name,
+                  required=field.required
+                )
+                  each option in field.options
+                    option(
+                      value=option.value,
+                      selected=String(option.value) === String(field.value)
+                    )= option.label
+              when 'multiselect'
+                select.w3-select(
+                  id=field.name,
+                  name=field.name,
+                  multiple,
+                  size=field.size || 6
+                )
+                  each option in field.options
+                    option(
+                      value=option.value,
+                      selected=field.value && field.value.includes(String(option.value))
+                    )= option.label
+              when 'file'
+                input.w3-input(
+                  id=field.name,
+                  name=field.name,
+                  type='file',
+                  accept=field.accept || '',
+                  required=field.required
+                )
+                if field.currentValue
+                  .w3-panel.w3-light-grey.w3-padding-small.w3-margin-top
+                    if field.previewType === 'image'
+                      p.w3-small.w3-margin-top Imagem atual
+                      img.w3-image(
+                        src=field.currentValue,
+                        alt=field.label,
+                        class='admin-current-preview-image'
+                      )
+                    else
+                      p.w3-small.w3-margin-top Ficheiro atual
+                      a(
+                        href=field.currentValue,
+                        target='_blank',
+                        rel='noopener noreferrer'
+                      ) Abrir ficheiro atual
+              when 'repeater'
+                .admin-repeater(
+                  data-field-name=field.name,
+                  data-item-key=field.itemKey || 'texto',
+                  data-placeholder=field.itemPlaceholder || ''
+                )
+                  .admin-repeater-items
+                    if field.value && field.value.length
+                      each entry in field.value
+                        .w3-row.admin-repeater-item
+                          .w3-col.s9
+                            input.w3-input(
+                              type='text',
+                              data-repeater-item-input,
+                              value=entry,
+                              placeholder=field.itemPlaceholder || ''
+                            )
+                          .w3-col.s3
+                            button.w3-button.w3-red.w3-block(
+                              type='button',
+                              data-repeater-remove
+                            ) Remover
+                    else
+                      .w3-row.admin-repeater-item
+                        .w3-col.s9
+                          input.w3-input(
+                            type='text',
+                            data-repeater-item-input,
+                            placeholder=field.itemPlaceholder || ''
+                          )
+                        .w3-col.s3
+                          button.w3-button.w3-red.w3-block(
+                            type='button',
+                            data-repeater-remove
+                          ) Remover
+                  button.w3-button.w3-blue.w3-small.w3-margin-top(
+                    type='button',
+                    data-repeater-add
+                  ) + Adicionar vantagem
+              when 'structured-list'
+                - var structuredConfig = JSON.stringify({ addLabel: field.addLabel || '+ Adicionar item', fields: field.fields || [] })
+                .admin-structured-list(data-field-name=field.name)
+                  script(type='application/json', data-structured-config='')= structuredConfig
+                  .admin-structured-list-items
+                    if field.value && field.value.length
+                      each entry in field.value
+                        .admin-structured-list-item(data-structured-item)
+                          .admin-structured-list-grid
+                            each subfield in field.fields
+                              .admin-structured-list-field
+                                - var entryValue = entry && entry[subfield.name] != null ? entry[subfield.name] : ''
+                                label.w3-label= subfield.label
+                                case subfield.type
+                                  when 'select'
+                                    select.w3-select(
+                                      data-structured-input,
+                                      data-subfield-name=subfield.name
+                                    )
+                                      option(value='')
+                                      each option in subfield.options || []
+                                        option(
+                                          value=option.value,
+                                          selected=String(option.value) === String(entryValue)
+                                        )= option.label
+                                  default
+                                    input.w3-input(
+                                      type=subfield.type || 'text',
+                                      value=entryValue,
+                                      placeholder=subfield.placeholder || '',
+                                      data-structured-input,
+                                      data-subfield-name=subfield.name
+                                    )
+                          button.w3-button.w3-red.w3-margin-top(
+                            type='button',
+                            data-structured-remove
+                          ) Remover
+                  button.w3-button.w3-blue.w3-small.w3-margin-top(
+                    type='button',
+                    data-structured-add
+                  )= field.addLabel || '+ Adicionar item'
+              default
+                input.w3-input(
+                  id=field.name,
+                  name=field.name,
+                  type=field.type || 'text',
+                  value=field.value || '',
+                  placeholder=field.placeholder || '',
+                  required=field.required,
+                  readonly=field.readonly
+                )
+
+            if field.helpText
+              p.w3-small.w3-text-grey.w3-margin-top= field.helpText
+
+        .w3-margin-top
+          button.w3-button.w3-blue(type='submit' id='submitBtn')= form.submitLabel
+          a.w3-button.w3-grey.admin-form-cancel(href=form.cancelHref) Cancelar
+
+        #loadingSpinner.w3-hide.w3-center.w3-padding
+          i.fa.fa-spinner.fa-spin.fa-2x
+
+  script.
+    window.ADMIN_FORM_CONFIG = !{JSON.stringify(form.clientConfig)};
+  script(src='https://kit.fontawesome.com/a076d05399.js')
+  script(src='/static/javascripts/admin_form.js')
+  if form.showInstagramPicker
+    script(src='/static/javascripts/admin_instagram_picker.js')

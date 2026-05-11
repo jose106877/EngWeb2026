@@ -1,0 +1,190 @@
+doctype html
+html
+  head
+    title Form Adicionar Registo A Nossa História
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='icon' href='/favicon.png')
+    link(rel='preconnect' href='https://fonts.googleapis.com')
+    link(rel='preconnect' href='https://fonts.gstatic.com' crossorigin)
+    link(href='https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap' rel='stylesheet')
+    link(rel='stylesheet' href='/static/stylesheets/admin.css')
+    link(rel='stylesheet' href='/static/stylesheets/admin_entity_form.css')
+    link(rel='stylesheet' href='/static/stylesheets/admin_history.css')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css')
+
+  body
+    block content
+      .w3-container.w3-padding
+        .w3-card-4.w3-padding.w3-margin-bottom
+          h1.w3-margin-bottom Adicionar um Novo Ano em "A Nossa História"
+
+          form#formANossaHistoria(enctype='multipart/form-data')
+            // Campo Ano
+            .w3-margin-bottom
+              label.w3-label Ano *
+              input.w3-input(
+                type='number',
+                name='ano',
+                required,
+                placeholder='Ex: 2023'
+              )
+
+            // Campo Imagem (com botão personalizado)
+            .w3-margin-bottom
+              label.w3-label Imagem (360x240px) *
+              .w3-row
+                .w3-col.s8
+                  input.w3-input(
+                    type='file',
+                    name='imagem',
+                    id='imagemInput',
+                    accept='image/jpeg,image/png,image/webp',
+                    required,
+                    class='admin-crop-file-input'
+                  )
+                  label.w3-button.w3-blue(
+                    for='imagemInput',
+                    class='admin-crop-file-button'
+                  ) Submeter
+                  span#fileName.w3-margin-left (Nenhum ficheiro selecionado)
+                .w3-col.s4
+                  button.w3-button.w3-red(
+                    type='button',
+                    id='removerImagem',
+                    class='admin-crop-remove-button'
+                  ) Remover
+
+            // Pré-visualização da imagem (Cropper)
+            .w3-margin-bottom
+              .w3-panel.w3-light-grey.w3-padding-small
+                h6.w3-margin-top Preview da Imagem
+                p.w3-small (Recorte para 360x240px)
+                div#imagemPreview.admin-crop-preview
+
+            // Campo Privacidade (escondido, mas obrigatório no schema)
+            input(type='hidden', name='privacidade', value='privado')
+
+            // Botões
+            .w3-margin-top
+              button.w3-button.w3-blue(
+                type='submit',
+                id='submitBtn'
+              )
+                i.fa.fa-save &nbsp;
+                Submeter
+              a.w3-button.w3-grey.admin-form-cancel(href='/admin/a_nossa_historia') Cancelar
+
+          // Loading spinner (oculto por padrão)
+          #loadingSpinner.w3-hide.w3-center.w3-padding
+            i.fa.fa-spinner.fa-spin.fa-2x
+
+    footer.w3-container.w3-black.w3-margin-top.w3-padding
+      a.w3-button.w3-white(href='/admin/a_nossa_historia') Voltar
+
+    // Scripts
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js')
+    script(src='https://kit.fontawesome.com/a076d05399.js') // Para ícones
+    script.
+      $(document).ready(function() {
+        const $imagemInput = $('#imagemInput');
+        const $fileName = $('#fileName');
+        const $imagemPreview = $('#imagemPreview');
+        const $removerImagem = $('#removerImagem');
+        const $form = $('#formANossaHistoria');
+        const $submitBtn = $('#submitBtn');
+        const $loadingSpinner = $('#loadingSpinner');
+        let cropper;
+
+        // Atualiza o nome do ficheiro quando uma imagem é selecionada
+        $imagemInput.on('change', function(e) {
+          const fileName = e.target.files[0]?.name || '(Nenhum ficheiro selecionado)';
+          $fileName.text(fileName);
+          $removerImagem.show();
+
+          if (e.target.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+              $imagemPreview.empty();
+              const $img = $('<img>').attr('src', event.target.result).addClass('admin-crop-image');
+              $imagemPreview.append($img).show();
+
+              // Inicializa o Cropper
+              if (cropper) cropper.destroy();
+              cropper = new Cropper($img[0], {
+                aspectRatio: 360 / 240, // Proporção 3:2 (360x240)
+                viewMode: 1,
+                dragMode: 'crop',
+                autoCropArea: 0.8,
+                guides: true,
+                highlight: true,
+                cropBoxResizable: true,
+                cropBoxMovable: true,
+                minCropBoxWidth: 45,
+                minCropBoxHeight: 30,
+              });
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          }
+        });
+
+        // Remover imagem
+        $removerImagem.on('click', function() {
+          $imagemInput.val('');
+          $fileName.text('(Nenhum ficheiro selecionado)');
+          $imagemPreview.hide().empty();
+          $removerImagem.hide();
+          if (cropper) {
+            cropper.destroy();
+            cropper = null;
+          }
+        });
+
+        // Submeter formulário
+        $form.on('submit', function(e) {
+          e.preventDefault();
+          if (!cropper) {
+            alert('Por favor, selecione uma imagem.');
+            return;
+          }
+
+          $submitBtn.prop('disabled', true);
+          $loadingSpinner.removeClass('w3-hide');
+
+          // Obtém a imagem recortada
+          cropper.getCroppedCanvas({
+              width: 360,
+              height: 240,
+              fillColor: '#fff'
+            }).toBlob(function(blob) {
+              const formData = new FormData();
+              const ano = $form.find('[name="ano"]').val();
+              formData.append('ano', ano);
+              formData.append('_id', 'anh-' + ano);
+              formData.append('imagem', blob, ano + '.png');
+              formData.append('privacidade', 'privado');
+            
+              $.ajax({
+                url: '/api/anossahistoria',
+                method: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function() {
+                  window.location.href = '/admin/a_nossa_historia';
+                },
+                error: function(xhr) {
+                  if (xhr.status === 401 && xhr.responseJSON?.redirectTo) {
+                    window.location.href = xhr.responseJSON.redirectTo;
+                    return;
+                  }
+                  $submitBtn.prop('disabled', false);
+                  $loadingSpinner.addClass('w3-hide');
+                  const errorMsg = xhr.responseJSON?.message || 'Erro desconhecido';
+                  alert('Erro ao guardar: ' + errorMsg);
+                }
+              });
+            });
+        });
+      });

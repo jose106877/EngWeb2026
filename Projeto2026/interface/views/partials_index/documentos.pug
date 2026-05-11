@@ -1,0 +1,126 @@
+section#documentos.section.alt-bg.screen-page.reveal
+  .container
+    .section-head
+      div
+        p.teamv2-label Arquivo oficial
+        h2 Documentos
+
+    .docs-shell
+
+      .docs-controls
+        .docs-search
+          label.docs-search-label(for='docs-search') Procurar documentos
+          input#docs-search(type='search' placeholder='Pesquisar por nome, ano ou departamento' autocomplete='off')
+
+        .teamv2-tabs.docs-toolbar(role='tablist' aria-label='Filtrar documentos por área')
+          button.teamv2-tab.is-active(
+            type='button'
+            data-doc-filter='all'
+            role='tab'
+            aria-selected='true'
+            style='--tab-i: 0'
+          ) Todos
+          button.teamv2-tab(
+            type='button'
+            data-doc-filter='estatutos'
+            role='tab'
+            aria-selected='false'
+            style='--tab-i: 1'
+          ) Estatutos
+          button.teamv2-tab(
+            type='button'
+            data-doc-filter='planeamento'
+            role='tab'
+            aria-selected='false'
+            style='--tab-i: 2'
+          ) Planeamento
+          button.teamv2-tab(
+            type='button'
+            data-doc-filter='direcao'
+            role='tab'
+            aria-selected='false'
+            style='--tab-i: 3'
+          ) Direção
+          button.teamv2-tab(
+            type='button'
+            data-doc-filter='ag'
+            role='tab'
+            aria-selected='false'
+            style='--tab-i: 4'
+          ) Assembleia Geral
+          button.teamv2-tab(
+            type='button'
+            data-doc-filter='fiscal'
+            role='tab'
+            aria-selected='false'
+            style='--tab-i: 5'
+          ) Conselho Fiscal e Jurisdicional
+          button.teamv2-tab(
+            type='button'
+            data-doc-filter='outros'
+            role='tab'
+            aria-selected='false'
+            style='--tab-i: 6'
+          ) Outros
+
+      p#docs-filter-status.docs-filter-status A mostrar todas as áreas documentais.
+
+      #docs-grid.docs-grid
+
+        article.doc-card(data-doc-category='estatutos')
+          header.doc-card-head
+            span.doc-card-icon(aria-hidden='true')
+              svg(fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.8')
+                path(d='M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z')
+                polyline(points='14 2 14 8 20 8')
+            h3 Estatutos
+          ul.doc-card-links(data-doc-list='estatutos')
+
+        article.doc-card(data-doc-category='planeamento')
+          header.doc-card-head
+            span.doc-card-icon(aria-hidden='true')
+              svg(fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.8')
+                rect(x='3' y='4' width='18' height='18' rx='2')
+                line(x1='8' y1='2' x2='8' y2='6')
+                line(x1='16' y1='2' x2='16' y2='6')
+                line(x1='3' y1='10' x2='21' y2='10')
+            h3 Planeamento
+          ul.doc-card-links(data-doc-list='planeamento')
+
+        article.doc-card(data-doc-category='direcao')
+          header.doc-card-head
+            span.doc-card-icon(aria-hidden='true')
+              svg(fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.8')
+                path(d='M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2')
+                circle(cx='9' cy='7' r='4')
+            h3 Direção
+          ul.doc-card-links(data-doc-list='direcao')
+
+        article.doc-card(data-doc-category='ag')
+          header.doc-card-head
+            span.doc-card-icon(aria-hidden='true')
+              svg(fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.8')
+                polygon(points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2')
+            h3 Assembleia Geral
+          ul.doc-card-links(data-doc-list='ag')
+
+        article.doc-card(data-doc-category='fiscal')
+          header.doc-card-head
+            span.doc-card-icon(aria-hidden='true')
+              svg(fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.8')
+                path(d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z')
+            h3 Conselho Fiscal e Jurisdicional
+          ul.doc-card-links(data-doc-list='fiscal')
+
+        article.doc-card(data-doc-category='outros')
+          header.doc-card-head
+            span.doc-card-icon(aria-hidden='true')
+              svg(fill='none' viewBox='0 0 24 24' stroke='currentColor' stroke-width='1.8')
+                circle(cx='12' cy='12' r='10')
+                line(x1='12' y1='8' x2='12' y2='12')
+                line(x1='12' y1='16' x2='12.01' y2='16')
+            h3 Outros
+          ul.doc-card-links(data-doc-list='outros')
+
+      p#docs-empty.docs-empty
+        | Não existem documentos disponíveis para #[strong#docs-empty-filter]

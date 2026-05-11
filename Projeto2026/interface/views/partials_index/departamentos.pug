@@ -1,0 +1,23 @@
+section#departamentos.section.alt-bg.screen-page.reveal
+  -
+    const linkColaborador = textoSolto?.["link-colaborador"] || "#voluntarios";
+  .container
+    .teamv2-shell
+      .teamv2-header
+        div
+          p.teamv2-label Departamentos
+          h2.teamv2-title.section-title
+            span.title-word A
+            span.title-word nossa
+            br
+            span.title-word.title-word-accent Equipa
+
+      .department-tabs-shell
+        button#department-prev.department-tabs-nav(type='button' aria-label='Departamento anterior') ←
+        #department-tabs.department-tabs(role='tablist' aria-label='Departamentos da direção')
+        button#department-next.department-tabs-nav(type='button' aria-label='Departamento seguinte') →
+      #department-panel.department-panel.department-panel-v2
+
+    a.btn.btn-primary.collaborator-cta(href=linkColaborador target='_blank' rel='noopener noreferrer') Queres ser colaborador?
+    p.collaborator-link-note
+      a(href=linkColaborador target='_blank' rel='noopener noreferrer') Ir para Forms

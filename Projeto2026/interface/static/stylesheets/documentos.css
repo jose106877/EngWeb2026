@@ -1,0 +1,223 @@
+/* documentos.css
+ * Documentos section: docs-shell, filter toolbar, doc-card grid.
+ */
+
+.docs-shell {
+  display: grid;
+  gap: 18px;
+}
+
+.docs-controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.docs-search {
+  display: grid;
+  gap: 6px;
+}
+
+.docs-search-label {
+  font-family: var(--font-subtitle);
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+.docs-search input {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0 12px;
+  font: inherit;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.docs-search input:focus {
+  border-color: #cc9b2b;
+  box-shadow: 0 0 0 3px rgba(204, 155, 43, 0.16);
+}
+
+.docs-toolbar {
+  margin-bottom: 2px;
+}
+
+.docs-filter-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-right: 2px;
+}
+
+.docs-pill {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: #5a677c;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 0.81rem;
+  font-weight: 700;
+  font-family: var(--font-subtitle);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.docs-pill:hover {
+  border-color: #cfb069;
+  color: var(--ink);
+}
+
+.docs-pill.is-active {
+  border-color: #cc9b2b;
+  background: var(--brand);
+  color: #2d2108;
+}
+
+.docs-filter-status {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #5f6c80;
+  text-align: right;
+  font-family: var(--font-subtitle);
+}
+
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.doc-card {
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.doc-card:hover {
+  border-color: var(--line-strong);
+  box-shadow: 0 10px 24px rgba(30, 44, 63, 0.09);
+  transform: translateY(-1px);
+}
+
+.doc-card.is-hidden {
+  display: none;
+}
+
+.doc-item.is-hidden {
+  display: none;
+}
+
+.doc-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.doc-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(224, 168, 39, 0.14);
+  color: #c08b15;
+  display: grid;
+  place-items: center;
+}
+
+.doc-card-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.doc-card-head h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.doc-card-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.doc-item {
+  display: block;
+}
+
+.doc-item a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #2f3d50;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  text-decoration: none;
+  border-radius: 8px;
+  padding: 4px 0;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.doc-item a::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #d09b2a;
+  flex-shrink: 0;
+}
+
+.doc-item a:hover {
+  color: var(--brand-dark);
+  transform: translateX(2px);
+}
+
+.docs-empty {
+  display: none;
+  margin: 4px 0 0;
+  text-align: center;
+  color: #5f6c80;
+}
+
+.docs-empty.is-visible {
+  display: block;
+}
+
+#documentos.screen-page {
+  justify-content: flex-start;
+}
+
+#departamentos.screen-page {
+  justify-content: flex-start;
+}
+
+#antigos-presidentes.screen-page {
+  justify-content: flex-start;
+}
+
+@media (max-width: 780px) {
+  .docs-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-filter-status {
+    text-align: left;
+  }
+}

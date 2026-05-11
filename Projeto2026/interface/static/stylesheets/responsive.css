@@ -1,0 +1,2037 @@
+/* responsive.css
+ * Media queries, accessibility (prefers-reduced-motion), touch overrides, animation keyframes.
+ */
+
+/* Accessibility: disable motion effects when requested by user */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+
+  body {
+    scroll-snap-type: none;
+  }
+
+  .hero-gradient,
+  .hero::before,
+  .hero::after,
+  .nav-wrap,
+  .hero-content,
+  .quick-glass-nav {
+    transition: none;
+    transform: none;
+    animation: none;
+  }
+
+  .hero.hero-entry .hero-char,
+  .hero.hero-entry .hero-lead,
+  .hero.hero-entry .hero-actions {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+
+  .reveal,
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  #sobre .about-title,
+  #sobre .about-card {
+    animation: none;
+  }
+
+  #sobre .about-title {
+    text-shadow: none;
+  }
+
+  .presidents-showcase,
+  .presidents-list,
+  .president-row,
+  .president-row-badge,
+  .president-row-mark,
+  .president-detail,
+  .president-photo-card,
+  .president-photo-card::before,
+  .president-photo-shell img {
+    transition: none;
+  }
+
+  .president-photo-card.is-loading::before {
+    animation: none;
+  }
+
+  #antigos-presidentes.reveal.visible .president-row {
+    animation: none;
+    left: 0;
+    will-change: auto;
+  }
+
+  .about-card,
+  .about-card::before,
+  .about-card .tilted-card-content {
+    transition: none;
+    transform: none;
+  }
+
+  .activities-feed-track,
+  .activities-post-slot {
+    transition: none;
+  }
+
+  .activities-nav-btn {
+    transition: none;
+    transform: none;
+  }
+
+  .history-year-number,
+  .history-dot,
+  .history-connector,
+  .history-event-content,
+  .history-event-title,
+  .history-timeline-hint-arrow {
+    transition: none;
+    animation: none;
+    transform: none;
+  }
+
+  #historia::before {
+    display: none;
+  }
+
+  #historia .history-topbar,
+  #historia .history-team-col,
+  #historia .history-right-col,
+  #historia .history-year-line {
+    transition: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+body.is-dragging-gallery {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+main,
+section,
+header,
+footer,
+.container {
+  min-width: 0;
+}
+
+input,
+select,
+textarea,
+button {
+  max-width: 100%;
+}
+
+@supports (-webkit-touch-callout: none) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+/* Top-left section headings: unified scale and serif style */
+#sobre .section-head h2.section-title,
+#atividades .section-head h2.section-title,
+#documentos .section-head h2.section-title,
+#documentos .section-head h2,
+#antigos-presidentes .section-head h2.section-title,
+#apoio .section-head h2.section-title,
+#voluntarios .section-head h2,
+#equipa .teamv2-title.section-title,
+#departamentos .teamv2-title.section-title,
+#historia .history-page-title.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.02rem, 3vw, 2.4rem);
+  letter-spacing: 0;
+  line-height: 1.08;
+}
+
+/* Touch devices: disable hover-based parallax */
+@media (hover: none) {
+  .hero-gradient,
+  .hero::before,
+  .hero::after,
+  .nav-wrap,
+  .hero-content {
+    transform: none;
+  }
+
+  .about-card {
+    transform: none;
+  }
+
+  .about-card::before {
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   #atividades — layout, filtro e staggered animations
+   ============================================================ */
+
+#atividades .activities-tabs {
+  margin-bottom: 22px;
+}
+
+#atividades .activities-feed-host {
+  width: 100%;
+}
+
+/* -------------------------------------------------------------------
+   Stagger 1 — Título (section-head entra primeiro)
+   delay 40 ms
+------------------------------------------------------------------- */
+#atividades.reveal:not(.visible) .section-head {
+  opacity: 0;
+  transform: translateY(22px);
+  filter: blur(3px);
+}
+
+#atividades.reveal.visible .section-head {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition:
+    opacity  560ms cubic-bezier(0.22, 1, 0.36, 1)  40ms,
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1) 40ms,
+    filter   540ms cubic-bezier(0.22, 1, 0.36, 1)  40ms;
+}
+
+/* title-word individual (sublinha acento) */
+#atividades.reveal:not(.visible) .title-word {
+  opacity: 0;
+  transform: translateY(18px);
+  filter: blur(4px);
+}
+
+#atividades.reveal.visible .title-word {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition:
+    opacity   580ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
+    transform 580ms cubic-bezier(0.22, 1, 0.36, 1) 60ms,
+    filter    560ms cubic-bezier(0.22, 1, 0.36, 1) 60ms;
+}
+
+/* -------------------------------------------------------------------
+   Stagger 2 — Barra de filtros (container + separador inferior)
+   delay 160 ms
+------------------------------------------------------------------- */
+#atividades.reveal:not(.visible) .activities-tabs {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+#atividades.reveal.visible .activities-tabs {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity   400ms cubic-bezier(0.22, 1, 0.36, 1) 160ms,
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1) 160ms;
+}
+
+/* -------------------------------------------------------------------
+   Stagger 3 — Botões de filtro (escalonados individualmente)
+   delay 200 ms + (i × 55 ms)
+------------------------------------------------------------------- */
+#atividades.reveal:not(.visible) .activities-tab {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+#atividades.reveal.visible .activities-tab {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    color     0.2s ease,
+    opacity   420ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--tab-i, 0) * 55ms + 200ms),
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--tab-i, 0) * 55ms + 200ms);
+}
+
+/* -------------------------------------------------------------------
+   Stagger 4 — Caixa de galeria (entra após os filtros)
+   delay 460 ms
+------------------------------------------------------------------- */
+#atividades.reveal:not(.visible) .activities-feed-host {
+  opacity: 0;
+  transform: translateY(36px);
+  filter: blur(6px);
+}
+
+#atividades.reveal.visible .activities-feed-host {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition:
+    opacity   700ms cubic-bezier(0.22, 1, 0.36, 1) 460ms,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1) 460ms,
+    filter    660ms cubic-bezier(0.22, 1, 0.36, 1) 460ms;
+}
+
+/* -------------------------------------------------------------------
+   Animações de inserção dinâmica — disparam quando o JS renderiza
+   (ex.: ao trocar de filtro)
+------------------------------------------------------------------- */
+@keyframes activityGalleryBoxIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes activityControlsIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Revela o contentor da galeria quando é (re)inserido */
+#atividades .activities-feed-card {
+  animation: activityGalleryBoxIn 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Revela os controlos com atraso relativo */
+#atividades .activities-card-footer {
+  animation: activityControlsIn 380ms cubic-bezier(0.22, 1, 0.36, 1) 140ms both;
+}
+
+/* ============================================================
+   Mobile layout tuning
+   ============================================================ */
+
+@media (max-width: 980px) {
+  .container {
+    width: min(1140px, 94vw);
+  }
+
+  .section {
+    padding: 64px 0;
+  }
+
+  .screen-page {
+    min-height: auto;
+    justify-content: flex-start;
+  }
+
+  #historia .history-shell {
+    height: auto;
+    min-height: auto;
+  }
+
+  body > header.hero,
+  body > main > section {
+    min-height: auto;
+  }
+
+  .teamv2-shell,
+  .department-panel-v2,
+  .presidents-showcase,
+  .activities-feed-card,
+  .docs-grid,
+  .socio-shell,
+  .support-shell {
+    max-width: 100%;
+  }
+
+  #socios .socio-shell,
+  #voluntarios .socio-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #antigos-presidentes .presidents-showcase {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #antigos-presidentes .president-detail {
+    position: static;
+  }
+
+  #antigos-presidentes .presidents-showcase,
+  #antigos-presidentes .presidents-showcase.has-active-president,
+  #antigos-presidentes .presidents-showcase:not(.has-active-president) {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  #antigos-presidentes .president-detail {
+    order: -1;
+  }
+
+  #antigos-presidentes .presidents-list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(210px, 76vw);
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 4px 14px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #antigos-presidentes .presidents-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  #antigos-presidentes .president-row {
+    scroll-snap-align: start;
+  }
+
+  #historia .history-columns {
+    grid-template-columns: minmax(0, 1fr);
+    overflow: visible;
+    gap: 18px;
+  }
+
+  #historia .history-team-col,
+  #historia .history-right-col {
+    height: auto;
+    overflow: visible;
+  }
+
+  #historia .history-letter-stack {
+    min-height: 0;
+  }
+
+  #historia .history-timeline-card {
+    min-height: auto;
+  }
+
+  #historia .history-timeline-scroll {
+    max-height: 340px;
+    min-height: 260px;
+  }
+
+  #equipa .teamv2-cards,
+  #equipa .teamv2-cards.is-playful-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 720px) {
+  #sobre .section-head h2.section-title,
+  #atividades .section-head h2.section-title,
+  #documentos .section-head h2.section-title,
+  #documentos .section-head h2,
+  #antigos-presidentes .section-head h2.section-title,
+  #apoio .section-head h2.section-title,
+  #voluntarios .section-head h2,
+  #equipa .teamv2-title.section-title,
+  #departamentos .teamv2-title.section-title,
+  #historia .history-page-title.section-title {
+    font-size: clamp(1.62rem, 8vw, 2rem);
+  }
+
+  html {
+    scroll-padding-top: 10px;
+  }
+
+  .container {
+    width: min(1140px, 92vw);
+  }
+
+  body {
+    overflow-x: clip;
+  }
+
+  .section {
+    padding: 54px 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    padding-top: 20px;
+    padding-bottom: 28px;
+  }
+
+  .hero-title {
+    margin: 12px 0;
+    font-size: clamp(1.8rem, 8.8vw, 2.5rem);
+    line-height: 1.1;
+  }
+
+  .hero-lead {
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .logo {
+    font-size: 1.42rem;
+  }
+
+  .nav-wrap {
+    gap: 10px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px 0 8px;
+  }
+
+  .nav {
+    width: 100%;
+    gap: 8px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav a {
+    white-space: nowrap;
+    padding: 7px 10px;
+    font-size: 0.82rem;
+  }
+
+  .nav,
+  .department-tabs,
+  .activities-tabs,
+  .teamv2-tabs,
+  .docs-toolbar {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .quick-glass-nav {
+    top: max(8px, env(safe-area-inset-top));
+    right: 8px;
+    left: 8px;
+    max-width: none;
+    width: auto;
+    border-radius: 15px;
+    padding: 7px;
+    gap: 4px;
+  }
+
+  .quick-glass-nav a {
+    font-size: 0.7rem;
+    padding: 6px 8px;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+
+  .section-head > p,
+  .section-copy {
+    max-width: 100%;
+  }
+
+  .glass-card,
+  .department-panel-v2,
+  .department-story-card,
+  .department-members-card,
+  .department-gallery-card {
+    border-radius: 18px;
+    padding: 16px;
+  }
+
+  .department-tab {
+    min-width: 200px;
+  }
+
+  .department-feature {
+    border-radius: 18px;
+    min-height: 180px;
+    padding: 18px;
+  }
+
+  .department-tabs-shell,
+  .activities-tabs-shell,
+  .teamv2-tabs-shell {
+    margin-left: calc((100vw - 100%) / -2);
+    margin-right: calc((100vw - 100%) / -2);
+    padding-left: max(4vw, 14px);
+    padding-right: max(4vw, 14px);
+  }
+
+  .department-feature-copy h3 {
+    font-size: clamp(1.25rem, 6vw, 1.7rem);
+  }
+
+  .department-gallery-overlay {
+    padding: 14px;
+  }
+
+  .history-page-title {
+    font-size: clamp(1.62rem, 8vw, 2rem);
+  }
+
+  .history-page-subtitle {
+    font-size: 0.82rem;
+    text-align: left;
+  }
+
+  .history-letter-sheet-main {
+    padding: 20px 16px 34px;
+  }
+
+  .history-team-panel {
+    padding: 14px;
+  }
+
+  .history-team-grid {
+    gap: 10px;
+  }
+
+  .history-photo-media {
+    height: clamp(170px, 30vh, 240px);
+    min-height: 0;
+  }
+
+  .history-photo-caption {
+    padding: 8px 10px 10px;
+    font-size: 0.76rem;
+  }
+
+  .history-spacer {
+    height: 72px;
+  }
+
+  .history-event-content {
+    padding-bottom: 40px;
+  }
+
+  .activities-feed-track {
+    padding: 0 10px 16px;
+  }
+
+  .activities-post-slot {
+    flex-basis: min(84vw, 330px);
+  }
+
+  .activities-card-footer {
+    padding: 10px 12px 14px;
+  }
+
+  .president-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+
+  #antigos-presidentes .section-head p {
+    display: none;
+  }
+
+  #antigos-presidentes .presidents-list {
+    margin-left: -4vw;
+    margin-right: -4vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
+  #antigos-presidentes .president-row {
+    min-height: 78px;
+    border-radius: 18px;
+    padding: 14px;
+    transform: none !important;
+  }
+
+  #antigos-presidentes .president-row-badge {
+    display: inline-flex;
+    opacity: 1;
+    transform: none;
+    justify-self: start;
+    grid-column: 1;
+    grid-row: 2;
+    width: fit-content;
+    margin-top: 4px;
+  }
+
+  #antigos-presidentes .president-row-mark {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .president-photo-shell {
+    height: min(60vh, 450px);
+  }
+
+  #antigos-presidentes .president-photo-card {
+    border-radius: 18px;
+  }
+
+  #antigos-presidentes .president-photo-shell {
+    height: clamp(240px, 54vh, 380px);
+  }
+
+  #antigos-presidentes .president-detail-meta {
+    padding: 13px 14px;
+    align-items: flex-start;
+  }
+
+  #antigos-presidentes .president-order-num {
+    min-width: 0;
+    padding: 8px 11px;
+    font-size: 0.78rem;
+  }
+
+  #historia .history-topbar {
+    padding: 10px 0 16px;
+  }
+
+  #historia .history-letter-sheet-back1,
+  #historia .history-letter-sheet-back2 {
+    display: none;
+  }
+
+  #historia .history-letter-stack {
+    padding: 0;
+  }
+
+  #historia .history-letter-sheet-main {
+    max-height: 56vh;
+    overflow-y: auto;
+    border-radius: 18px;
+    padding: 20px 16px 26px;
+  }
+
+  #historia .history-letter-head {
+    margin-bottom: 12px;
+  }
+
+  #historia .history-letter-divider {
+    margin-bottom: 14px;
+  }
+
+  #historia .history-letter-body,
+  #historia .history-letter-sheet-main p {
+    font-size: 0.9rem;
+    line-height: 1.72;
+  }
+
+  #historia .history-letter-seal {
+    display: none;
+  }
+
+  #historia .history-photos-panel {
+    padding: 14px;
+  }
+
+  #historia .history-team-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    margin-left: -14px;
+    margin-right: -14px;
+    padding: 0 14px 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #historia .history-photo-card {
+    flex: 0 0 min(78vw, 290px);
+    scroll-snap-align: start;
+  }
+
+  #historia .history-team-grid .history-photo-shell,
+  #historia .history-photo-media {
+    height: clamp(170px, 34vh, 240px);
+  }
+
+  #historia .history-year-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-left: -14px;
+    margin-right: -14px;
+    padding: 2px 14px 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #historia .history-year-chip {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 8px 12px;
+  }
+
+  #historia .history-timeline-card {
+    border-radius: 18px;
+    padding: 12px;
+  }
+
+  #historia .history-year-number {
+    font-size: clamp(3rem, 18vw, 4rem);
+    letter-spacing: -2px;
+  }
+
+  #historia .history-timeline-hint {
+    white-space: normal;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.78rem;
+  }
+
+  #historia .history-timeline-scroll {
+    max-height: 300px;
+    min-height: 220px;
+    padding-inline: 4px;
+  }
+
+  #historia .history-spacer {
+    height: 34px;
+  }
+
+  #historia .history-event-item {
+    gap: 12px;
+  }
+
+  #historia .history-event-content {
+    padding-bottom: 28px;
+    opacity: 0.72;
+  }
+
+  #historia .history-event-item.is-active .history-event-content {
+    opacity: 1;
+  }
+
+  #departamentos .department-tabs-shell {
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  #departamentos .department-tabs {
+    gap: 10px;
+    margin-left: -4vw;
+    margin-right: -4vw;
+    padding: 2px 4vw 12px;
+    scroll-snap-type: x mandatory;
+  }
+
+  #departamentos .department-tab {
+    min-width: min(76vw, 270px);
+    border-radius: 18px;
+    scroll-snap-align: start;
+  }
+
+  #departamentos .department-panel-v2 {
+    padding: 14px;
+    border-radius: 20px;
+    gap: 14px;
+  }
+
+  #departamentos .department-feature {
+    min-height: 150px;
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  #departamentos .department-kicker {
+    font-size: 0.66rem;
+    padding: 6px 10px;
+  }
+
+  #departamentos .department-content-grid {
+    gap: 12px;
+  }
+
+  #departamentos .department-story-card,
+  #departamentos .department-members-card,
+  #departamentos .department-gallery-card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  #departamentos .department-story-split {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    margin-left: -16px;
+    margin-right: -16px;
+    padding: 0 16px 8px;
+    scroll-snap-type: x mandatory;
+  }
+
+  #departamentos .department-story-block {
+    flex: 0 0 min(78vw, 280px);
+    scroll-snap-align: start;
+  }
+
+  #departamentos .department-members-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  #departamentos .department-member-card {
+    border-radius: 14px;
+  }
+
+  #departamentos .department-member-copy {
+    padding: 10px;
+  }
+
+  #departamentos .department-member-name {
+    font-size: 0.9rem;
+    line-height: 1.25;
+  }
+
+  #departamentos .department-member-role {
+    font-size: 0.78rem;
+  }
+
+  #departamentos .department-gallery-link {
+    aspect-ratio: 4 / 3.15;
+  }
+
+  #equipa .teamv2-header,
+  #departamentos .teamv2-header {
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+
+  #equipa .teamv2-tabs {
+    margin-left: -4vw;
+    margin-right: -4vw;
+    padding: 0 4vw 10px;
+    border-bottom: 0;
+    gap: 8px;
+    scroll-snap-type: x mandatory;
+  }
+
+  #equipa .teamv2-tab {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+    padding: 10px 14px;
+    scroll-snap-align: start;
+  }
+
+  #equipa .teamv2-tab::after {
+    display: none;
+  }
+
+  #equipa .teamv2-tab.is-active {
+    border-color: rgba(212, 160, 43, 0.58);
+    background: rgba(255, 248, 228, 0.96);
+  }
+
+  #equipa .teamv2-panel {
+    padding-top: 18px;
+  }
+
+  #equipa .teamv2-panel-top {
+    margin-bottom: 16px;
+  }
+
+  #equipa .teamv2-panel-note {
+    max-width: none;
+    width: 100%;
+  }
+
+  #equipa .teamv2-cards,
+  #equipa .teamv2-cards.is-playful-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    margin-left: -4vw;
+    margin-right: -4vw;
+    padding: 2px 4vw 14px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #equipa .teamv2-member {
+    flex: 0 0 min(68vw, 230px);
+    min-height: 0;
+    padding: 18px 14px 14px;
+    border-radius: 18px;
+    scroll-snap-align: start;
+  }
+
+  #equipa .teamv2-photo-wrap,
+  #equipa .teamv2-panel.is-playful .teamv2-photo-wrap {
+    width: min(100%, 150px);
+  }
+
+  #equipa .teamv2-member-info {
+    padding-top: 14px;
+  }
+
+  #equipa .teamv2-member-name {
+    font-size: 1rem;
+  }
+
+  #equipa .teamv2-member-role {
+    font-size: 0.84rem;
+  }
+
+  .docs-grid,
+  .about-grid,
+  .buttons-grid,
+  .support-grid,
+  .support-form {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .support-form {
+    gap: 12px;
+  }
+
+  .support-form .form-actions,
+  .form-actions {
+    width: 100%;
+  }
+
+  .support-form button,
+  .form-actions .btn {
+    width: 100%;
+  }
+
+  footer {
+    padding: 32px 0;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 560px) {
+  .section {
+    padding: 46px 0;
+  }
+
+  .hero {
+    min-height: 100svh;
+  }
+
+  .hero-tag {
+    font-size: 0.72rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.62rem, 9.2vw, 2.2rem);
+  }
+
+  .hero-lead {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .quick-glass-nav {
+    display: none;
+  }
+
+  .card-grid,
+  .docs-grid,
+  .support-form,
+  .history-team-grid,
+  #equipa .teamv2-cards,
+  .department-members-grid,
+  .department-story-split {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-content,
+  .section-head,
+  .teamv2-copy,
+  .department-story-copy,
+  .history-event-text,
+  .support-form {
+    overflow-wrap: anywhere;
+  }
+
+  #sobre .about-title {
+    max-width: 100%;
+    width: auto;
+  }
+
+  #historia .history-shell,
+  #historia .history-stage,
+  #historia .history-content-grid,
+  #historia .history-letter-sheet {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  #documentos .docs-toolbar,
+  #atividades .activities-tabs,
+  #departamentos .department-tabs,
+  #equipa .teamv2-tabs {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .department-tab {
+    min-width: 182px;
+  }
+
+  .department-tab-media {
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+  }
+
+  .department-tab-name {
+    font-size: 0.92rem;
+  }
+
+  .department-tab-meta {
+    font-size: 0.76rem;
+  }
+
+  .history-event-title {
+    font-size: 1rem;
+  }
+
+  .history-event-text {
+    font-size: 0.9rem;
+  }
+
+  .history-photo-media {
+    height: clamp(160px, 26vh, 210px);
+  }
+
+  .history-event-content {
+    padding-bottom: 30px;
+  }
+
+  .president-row {
+    padding: 13px 14px;
+  }
+}
+
+@media (max-width: 430px) {
+  .container {
+    width: min(1140px, 90vw);
+  }
+
+  .nav a {
+    font-size: 0.78rem;
+    padding: 6px 8px;
+  }
+
+  .hero-actions {
+    gap: 8px;
+  }
+
+  .hero-actions .btn {
+    min-height: 42px;
+  }
+
+  .section-head h2,
+  #equipa .teamv2-title,
+  #departamentos .teamv2-title {
+    font-size: clamp(1.35rem, 7vw, 1.72rem);
+  }
+
+  .glass-card,
+  .department-panel-v2 {
+    padding: 14px;
+  }
+
+  .activities-post-slot {
+    flex-basis: min(82vw, 296px);
+  }
+
+  .president-photo-shell {
+    min-height: 220px;
+  }
+
+  #antigos-presidentes .presidents-list {
+    grid-auto-columns: minmax(190px, 82vw);
+  }
+
+  #antigos-presidentes .president-detail-meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+  }
+
+  #historia .history-letter-sheet-main {
+    max-height: 60vh;
+  }
+
+  #departamentos .department-members-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #equipa .teamv2-member {
+    flex-basis: min(76vw, 240px);
+  }
+
+  .section-copy,
+  .section-head > p,
+  .hero-lead {
+    font-size: 0.88rem;
+  }
+
+  .department-feature,
+  .activities-feed-card,
+  .president-row,
+  .history-team-panel,
+  .history-event-content {
+    border-radius: 14px;
+  }
+}
+
+/* ============================================================
+   Mobile UX pass: final overrides kept under mobile breakpoints
+   ============================================================ */
+
+@media (max-width: 720px) {
+  :root {
+    --mobile-side-gap: clamp(16px, 5vw, 22px);
+  }
+
+  html {
+    scroll-padding-top: 12px;
+  }
+
+  body {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+
+  body > header.hero,
+  .screen-page {
+    min-height: auto;
+  }
+
+  .container {
+    width: calc(100% - (var(--mobile-side-gap) * 2));
+  }
+
+  .section {
+    padding: clamp(42px, 10vw, 58px) 0;
+  }
+
+  .section-head {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .section-head > p,
+  .section-copy {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .teamv2-label {
+    margin-bottom: 7px;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+  }
+
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+  }
+
+  .hero-gradient {
+    background-image: linear-gradient(
+        130deg,
+        rgba(12, 18, 26, 0.8) 0%,
+        rgba(25, 34, 47, 0.68) 58%,
+        rgba(71, 54, 21, 0.64) 100%
+      ),
+      url("https://static.wixstatic.com/media/174c5b_a81cac3e596e42d4b02ff0d23335aa37~mv2.jpg/v1/fill/w_720,h_960,al_c,q_72,usm_0.66_1.00_0.01,enc_avif,quality_auto/174c5b_a81cac3e596e42d4b02ff0d23335aa37~mv2.jpg");
+    background-position: center;
+    transform: none;
+    transition: none;
+  }
+
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+
+  .nav-wrap {
+    width: calc(100% - (var(--mobile-side-gap) * 2));
+    padding: max(16px, env(safe-area-inset-top)) 0 10px;
+  }
+
+  .nav {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 2px;
+  }
+
+  .nav a {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 11px;
+    font-size: 0.8rem;
+  }
+
+  .hero-content {
+    width: calc(100% - (var(--mobile-side-gap) * 2));
+    margin-top: auto;
+    padding-top: 18px;
+    padding-bottom: 0;
+  }
+
+  .hero-title {
+    max-width: 11ch;
+    text-wrap: balance;
+  }
+
+  .hero-lead {
+    max-width: 34ch;
+  }
+
+  .hero-actions {
+    margin-top: 22px;
+  }
+
+  .hero-actions .btn,
+  .btn {
+    min-height: 44px;
+  }
+
+  .quick-glass-nav {
+    top: auto;
+    right: var(--mobile-side-gap);
+    bottom: max(10px, env(safe-area-inset-bottom));
+    left: var(--mobile-side-gap);
+    z-index: 60;
+    display: flex;
+    width: auto;
+    max-width: none;
+    padding: 8px;
+    gap: 6px;
+    border-radius: 18px;
+    border-color: rgba(196, 207, 222, 0.72);
+    background: rgba(250, 252, 255, 0.84);
+    box-shadow: 0 12px 34px rgba(20, 30, 44, 0.18);
+    backdrop-filter: blur(18px) saturate(155%);
+    -webkit-backdrop-filter: blur(18px) saturate(155%);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    transform: translate3d(0, 16px, 0) scale(0.98);
+    justify-content: center;
+  }
+
+  .quick-glass-nav.is-visible {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  .quick-glass-nav::before {
+    display: none;
+  }
+
+  .quick-glass-nav a {
+    min-height: 38px;
+    min-width: max-content;
+    padding: 8px 12px;
+    border-radius: 13px;
+    color: #162030;
+    font-size: 0.74rem;
+    background: rgba(255, 255, 255, 0.54);
+    justify-content: center;
+    text-align: center;
+  }
+
+  .quick-glass-nav a.is-active {
+    background: rgba(212, 160, 43, 0.22);
+    border-color: rgba(180, 127, 18, 0.34);
+    color: #2d2108;
+  }
+
+  .glass-card,
+  .department-panel-v2,
+  .department-story-card,
+  .department-members-card,
+  .department-gallery-card,
+  .activities-highlight-window,
+  .activities-post-card,
+  .doc-card,
+  .president-photo-card {
+    box-shadow: 0 12px 28px rgba(34, 48, 70, 0.1);
+  }
+
+  .about-grid {
+    gap: 14px;
+  }
+
+  .about-card {
+    min-height: auto;
+    place-items: start;
+    padding: 18px 18px 18px 58px;
+    text-align: left;
+  }
+
+  .about-card .tilted-card-content {
+    justify-items: start;
+    gap: 6px;
+    transform: none;
+  }
+
+  .about-card-icon {
+    top: 18px;
+    left: 18px;
+  }
+
+  .about-card-title,
+  #sobre .about-card:nth-child(2) .about-card-title,
+  .about-card-title-nowrap {
+    width: auto;
+    max-width: 100%;
+    white-space: normal;
+    font-size: clamp(1.1rem, 5.4vw, 1.36rem);
+  }
+
+  .about-card p {
+    max-width: none;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  #historia {
+    overflow: visible;
+  }
+
+  #historia .history-shell {
+    height: auto;
+    min-height: auto;
+    padding: 42px var(--mobile-side-gap) 46px;
+    overflow: visible;
+  }
+
+  .history-topbar {
+    padding: 0;
+    margin-bottom: 18px;
+  }
+
+  .history-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: visible;
+  }
+
+  .history-right-col {
+    order: 1;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    gap: 14px;
+  }
+
+  .history-letter-col {
+    order: 2;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .history-letter-stack {
+    min-height: auto;
+    padding-right: 6px;
+    padding-bottom: 6px;
+  }
+
+  .history-letter-sheet-main {
+    padding: 20px 18px 30px;
+    overflow: visible;
+  }
+
+  .history-letter-head {
+    margin-bottom: 12px;
+  }
+
+  .history-letter-divider {
+    margin-bottom: 14px;
+  }
+
+  .history-letter-org {
+    font-size: 0.72rem;
+  }
+
+  .history-letter-body,
+  .history-letter-salutation {
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .history-letter-seal {
+    right: 16px;
+    bottom: 16px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .history-team-panel {
+    padding: 14px;
+  }
+
+  .history-team-title {
+    font-size: 1.08rem;
+  }
+
+  .history-team-grid {
+    margin-top: 10px;
+  }
+
+  .history-photo-media,
+  .history-team-grid .history-photo-shell {
+    height: clamp(190px, 54vw, 260px);
+    min-height: 0;
+  }
+
+  .history-year-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scroll-snap-type: x proximity;
+  }
+
+  .history-year-chip {
+    flex: 0 0 auto;
+    min-height: 34px;
+    scroll-snap-align: start;
+  }
+
+  .history-timeline-card {
+    padding: 12px 12px 0;
+    overflow: visible;
+  }
+
+  .history-year-number {
+    font-size: clamp(2.8rem, 18vw, 4rem);
+    letter-spacing: -2px;
+  }
+
+  .history-timeline-hint {
+    font-size: 0.68rem;
+  }
+
+  .history-timeline-scroll {
+    max-height: min(58vh, 420px);
+    min-height: 260px;
+    padding-inline: 8px 2px;
+    overscroll-behavior: contain;
+  }
+
+  .history-spacer {
+    height: 64px;
+  }
+
+  .history-event-item {
+    gap: 14px;
+  }
+
+  .history-event-content {
+    padding-bottom: 38px;
+  }
+
+  #departamentos .teamv2-header,
+  #equipa .teamv2-header {
+    margin-bottom: 22px;
+  }
+
+  #team-tabs.teamv2-tabs,
+  #documentos .teamv2-tabs,
+  #atividades .activities-tabs {
+    width: calc(100% + (var(--mobile-side-gap) * 2));
+    margin-right: calc(var(--mobile-side-gap) * -1);
+    margin-left: calc(var(--mobile-side-gap) * -1);
+    padding: 0 var(--mobile-side-gap) 8px;
+    gap: 8px;
+    border-bottom: 0;
+    scroll-padding-inline: var(--mobile-side-gap);
+    scroll-snap-type: x proximity;
+  }
+
+  #departamentos .teamv2-tab,
+  #equipa .teamv2-tab,
+  #documentos .teamv2-tab,
+  #atividades .activities-tab {
+    min-height: 40px;
+    padding: 9px 14px;
+    border: 1px solid rgba(205, 216, 231, 0.9);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.86);
+    scroll-snap-align: start;
+  }
+
+  #departamentos .teamv2-tab::after,
+  #equipa .teamv2-tab::after,
+  #documentos .teamv2-tab::after,
+  #atividades .teamv2-tab::after {
+    display: none;
+  }
+
+  #departamentos .teamv2-tab.is-active,
+  #equipa .teamv2-tab.is-active,
+  #documentos .teamv2-tab.is-active,
+  #atividades .activities-tab.is-active {
+    border-color: rgba(180, 127, 18, 0.42);
+    background: rgba(212, 160, 43, 0.2);
+    color: var(--ink);
+  }
+
+  .department-panel-v2 {
+    gap: 14px;
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .department-feature {
+    min-height: 170px;
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .department-feature-copy h3 {
+    font-size: clamp(1.22rem, 7vw, 1.66rem);
+  }
+
+  .department-kicker,
+  .department-card-kicker {
+    font-size: 0.66rem;
+  }
+
+  .department-content-grid {
+    gap: 12px;
+  }
+
+  .department-story-card,
+  .department-members-card,
+  .department-gallery-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .department-card-head {
+    margin-bottom: 12px;
+  }
+
+  .department-story-copy {
+    margin-bottom: 12px;
+    font-size: 0.92rem;
+  }
+
+  .department-story-split {
+    gap: 10px;
+  }
+
+  .department-story-block {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .department-members-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .department-member-card {
+    border-radius: 14px;
+  }
+
+  .department-member-copy {
+    padding: 10px;
+  }
+
+  .department-member-name {
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+
+  .department-member-role {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .department-gallery-link {
+    aspect-ratio: 4 / 3;
+  }
+
+  .department-gallery-overlay {
+    padding: 12px;
+  }
+
+  .department-gallery-controls {
+    margin-top: 10px;
+  }
+
+  .activities-see-all {
+    align-self: flex-start;
+    min-height: 38px;
+    margin-bottom: 0;
+  }
+
+  .activities-highlight-window {
+    border-radius: 18px;
+  }
+
+  .activities-highlight-link {
+    aspect-ratio: 4 / 3.25;
+    min-height: 220px;
+  }
+
+  .activities-highlight-copy {
+    padding: 16px;
+  }
+
+  .activities-highlight-copy h3 {
+    font-size: clamp(1.08rem, 5.8vw, 1.35rem);
+  }
+
+  .activities-highlight-tag {
+    font-size: 0.66rem;
+  }
+
+  .activities-highlight-dots {
+    margin-top: 10px;
+  }
+
+  .activities-meta-status {
+    margin: 8px 0 14px;
+    font-size: 0.82rem;
+  }
+
+  .activities-post-card {
+    gap: 0;
+    border-radius: 18px;
+  }
+
+  .activities-post-media {
+    aspect-ratio: 16 / 10;
+    min-height: 0;
+  }
+
+  .activities-post-body {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .activities-post-header {
+    gap: 8px;
+  }
+
+  .activities-post-header h3 {
+    font-size: 1.08rem;
+  }
+
+  .activities-post-header time {
+    white-space: normal;
+  }
+
+  .activities-post-caption {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .docs-shell {
+    gap: 14px;
+  }
+
+  .docs-filter-status {
+    text-align: left;
+    font-size: 0.82rem;
+  }
+
+  .docs-grid {
+    gap: 10px;
+  }
+
+  .doc-card {
+    gap: 10px;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .doc-card-head h3 {
+    font-size: 0.95rem;
+  }
+
+  .doc-item a {
+    min-height: 34px;
+    align-items: flex-start;
+    font-size: 0.88rem;
+  }
+
+  .presidents-showcase {
+    gap: 14px;
+  }
+
+  .president-photo-card {
+    border-radius: 16px;
+  }
+
+  .president-photo-shell {
+    height: clamp(250px, 72vw, 390px);
+    min-height: 240px;
+  }
+
+  .president-detail-meta {
+    align-items: flex-start;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .president-order-num {
+    min-width: 0;
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+
+  .presidents-list {
+    gap: 8px;
+  }
+
+  .president-row {
+    min-height: 54px;
+    padding: 13px 14px;
+    border-width: 1px;
+  }
+
+  .president-row-mark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .socios-top {
+    gap: 18px;
+    margin-bottom: 34px;
+  }
+
+  .socios-vantagens {
+    margin-top: 0;
+  }
+
+  .lanyard-scene {
+    min-height: 0;
+  }
+
+  .lanyard-strap {
+    width: 76px;
+    height: 184px;
+    margin-bottom: -8px;
+  }
+
+  .lanyard-badge {
+    width: min(230px, 72vw);
+    border-radius: 16px;
+  }
+
+  .lanyard-hole {
+    width: 20px;
+    height: 20px;
+    margin-top: 16px;
+  }
+
+  .lanyard-badge-inner {
+    padding: 16px 22px;
+  }
+
+  .lanyard-title {
+    font-size: 1.6rem;
+  }
+
+  .lanyard-sub {
+    font-size: 0.7rem;
+  }
+
+  .socios-block-title {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    font-size: 0.9rem;
+  }
+
+  .socios-list li {
+    gap: 10px;
+    padding: 11px 0;
+    font-size: 0.92rem;
+  }
+
+  .partners-track-wrap {
+    padding-top: 28px;
+  }
+
+  .partners-label {
+    margin-bottom: 14px;
+    text-align: left;
+  }
+
+  .partners-track {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+    scrollbar-width: none;
+  }
+
+  .partners-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .partners-slide {
+    gap: 12px;
+    padding: 0 4px 8px;
+    animation: none;
+  }
+
+  .partner-chip {
+    min-width: 88px;
+    padding: 12px 10px;
+  }
+
+  .partner-chip img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .partner-chip span {
+    font-size: 0.72rem;
+  }
+
+  #voluntarios .card-grid {
+    gap: 12px;
+  }
+
+  .support-form {
+    gap: 10px;
+  }
+
+  .support-form input,
+  .support-form textarea {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  footer {
+    padding: 30px 0 calc(96px + env(safe-area-inset-bottom));
+  }
+
+  .footer-grid {
+    gap: 18px;
+  }
+
+  footer a {
+    min-height: 28px;
+  }
+}
+
+@media (max-width: 430px) {
+  .hero-title {
+    max-width: 10ch;
+  }
+
+  .quick-glass-nav {
+    right: 10px;
+    left: 10px;
+  }
+
+  .quick-glass-nav a {
+    min-height: 36px;
+    padding: 8px 10px;
+    font-size: 0.7rem;
+  }
+
+  .history-timeline-scroll {
+    min-height: 240px;
+    max-height: 55vh;
+  }
+
+  .department-panel-v2 {
+    padding: 10px;
+  }
+
+  .department-story-card,
+  .department-members-card,
+  .department-gallery-card {
+    padding: 14px;
+  }
+
+  .activities-highlight-link {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 370px) {
+  .department-members-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .president-detail-meta {
+    flex-direction: column;
+  }
+
+  .lanyard-badge {
+    width: min(220px, 78vw);
+  }
+}
+
+@media (max-width: 720px) {
+  .glass-card:hover,
+  .about-card:hover,
+  .about-card.is-tilting,
+  .department-tab:hover,
+  .department-gallery-btn:hover,
+  .activities-tab:hover,
+  .activities-highlight-nav:hover,
+  .president-row:hover,
+  .btn:hover {
+    transform: none;
+  }
+}

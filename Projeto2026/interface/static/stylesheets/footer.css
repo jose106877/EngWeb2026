@@ -1,0 +1,473 @@
+/* footer.css
+ * Footer and voluntarios section cards.
+ */
+
+footer {
+  background: #1b2230;
+  color: #cfd8e6;
+  padding: 42px 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 24px;
+}
+
+footer h3,
+footer h4 {
+  color: #f4f8ff;
+  margin-bottom: 8px;
+}
+
+footer a {
+  color: #f1cd7c;
+  display: block;
+  margin-bottom: 7px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0) scale(0.988);
+  filter: blur(4px);
+  transition: opacity 780ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 860ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 860ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+#sobre.reveal:not(.visible) .about-title {
+  opacity: 0;
+  transform: translateY(18px) scale(0.84);
+  filter: blur(7px);
+  text-shadow: 0 0 0 rgba(224, 168, 39, 0);
+}
+
+#sobre.reveal:not(.visible) .about-card {
+  opacity: 0;
+  filter: blur(6px);
+  transform: perspective(1100px) translate3d(var(--about-start-x), var(--about-start-y), 0)
+    rotateX(0deg) rotateY(0deg) scale(0.86);
+}
+
+#sobre.reveal.visible .about-title {
+  animation: aboutTitleSpotlight 820ms cubic-bezier(0.22, 1, 0.36, 1) 80ms backwards;
+}
+
+#sobre.reveal.visible .about-card {
+  animation: aboutCardEntry 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--about-entry-delay) backwards;
+}
+
+@media (max-width: 980px) {
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #historia .history-shell {
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: 0 28px 28px;
+  }
+
+  .history-topbar {
+    padding-top: 28px;
+  }
+
+  .history-columns {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 20px;
+  }
+
+  .history-right-col {
+    min-height: 0;
+  }
+
+  .history-timeline-card {
+    padding: 10px 10px 0;
+  }
+
+  .history-timeline-top {
+    padding: 0 4px 9px;
+  }
+
+  .history-letter-sheet-main {
+    padding: 30px 28px 48px;
+  }
+
+  .history-letter-seal {
+    right: 22px;
+    bottom: 22px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .about-card {
+    min-height: 200px;
+  }
+
+  .activities-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-panel {
+    align-self: auto;
+    min-height: 0;
+    height: auto;
+  }
+
+  .activities-post-slot {
+    flex-basis: clamp(280px, 62vw, 430px);
+  }
+
+  .activities-feed-host {
+    min-height: clamp(390px, 58vh, 660px);
+  }
+
+  #equipa .teamv2-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .docs-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .docs-filter-status {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .presidents-showcase {
+    grid-template-columns: minmax(250px, 0.92fr) minmax(300px, 1.08fr);
+    gap: 20px;
+  }
+
+  .presidents-showcase:not(.has-active-president) {
+    grid-template-columns: minmax(250px, 680px);
+  }
+
+  .president-detail {
+    top: 16px;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-bottom: 0;
+  }
+
+  .quick-glass-nav {
+    top: max(10px, env(safe-area-inset-top));
+    right: 10px;
+    max-width: calc(100vw - 20px);
+    padding: 8px;
+    gap: 5px;
+    border-radius: 16px;
+  }
+
+  .quick-glass-nav a {
+    font-size: 0.72rem;
+    padding: 6px 9px;
+  }
+
+  .nav-wrap {
+    gap: 10px;
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .nav {
+    justify-content: flex-start;
+  }
+
+  .section-head {
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+
+  #equipa .teamv2-header,
+  #departamentos .teamv2-header {
+    align-items: flex-start;
+    margin-bottom: 34px;
+  }
+
+  #equipa .teamv2-subtitle,
+  #departamentos .teamv2-subtitle {
+    max-width: 100%;
+    text-align: left;
+  }
+
+  #equipa .teamv2-tab,
+  #departamentos .teamv2-tab,
+  #documentos .teamv2-tab {
+    padding: 13px 16px 11px;
+    font-size: 0.8rem;
+  }
+
+  #equipa .teamv2-dept-name {
+    font-size: 1.28rem;
+  }
+
+  #equipa .teamv2-cards {
+    grid-template-columns: 1fr;
+  }
+
+  #equipa .teamv2-cards.is-playful-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #equipa .teamv2-panel.is-playful .teamv2-member,
+  #equipa .teamv2-panel.is-playful .teamv2-member:hover {
+    transform: none;
+  }
+
+  .card-grid,
+  .department-meta,
+  .docs-grid,
+  .footer-grid,
+  .support-form {
+    grid-template-columns: 1fr;
+  }
+
+  #historia .history-shell {
+    height: 100dvh;
+    min-height: 100dvh;
+    padding: 0 16px 22px;
+  }
+
+  .history-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 22px 0 16px;
+  }
+
+  .history-page-subtitle {
+    text-align: left;
+  }
+
+  .history-columns {
+    gap: 20px;
+  }
+
+  .history-letter-stack {
+    padding-right: 10px;
+    padding-bottom: 10px;
+  }
+
+  .history-letter-sheet-main {
+    padding: 24px 20px 42px;
+  }
+
+  .history-letter-head {
+    margin-bottom: 14px;
+    gap: 8px;
+  }
+
+  .history-letter-divider {
+    margin-bottom: 16px;
+  }
+
+  .history-letter-salutation,
+  .history-letter-body {
+    font-size: 0.85rem;
+  }
+
+  .history-letter-body {
+    line-height: 1.75;
+  }
+
+  .history-letter-signature {
+    margin-top: auto;
+    padding-top: 16px;
+  }
+
+  .history-team-panel {
+    padding: 18px 16px;
+  }
+
+  .history-timeline-hint {
+    font-size: 0.72rem;
+    letter-spacing: 0.025em;
+  }
+
+  .history-team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .history-photo-media {
+    min-height: 148px;
+  }
+
+  .history-event-title {
+    font-size: 1.04rem;
+  }
+
+  .history-event-text {
+    font-size: 0.95rem;
+  }
+
+  .history-year-number {
+    font-size: clamp(3.2rem, 15vw, 4.2rem);
+    letter-spacing: -2px;
+  }
+
+  .history-event-content {
+    padding-bottom: 62px;
+  }
+
+  .history-right-col {
+    min-height: 0;
+    gap: 10px;
+  }
+
+  .history-timeline-card {
+    padding: 9px 9px 0;
+  }
+
+  .history-timeline-top {
+    padding: 0 3px 8px;
+  }
+
+  .history-timeline-scroll {
+    padding-inline: 8px 2px;
+  }
+
+  .history-letter-seal {
+    right: 18px;
+    bottom: 18px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .about-card {
+    min-height: auto;
+    padding: 26px 20px;
+  }
+
+  .activities-feed-card {
+    border-radius: 18px;
+  }
+
+  .activities-feed-track {
+    padding: 0 14px 18px;
+  }
+
+  .activities-post-slot {
+    flex-basis: min(86vw, 360px);
+    margin-right: 12px;
+  }
+
+  .activities-feed-host {
+    min-height: clamp(340px, 52vh, 520px);
+  }
+
+  .activities-edge-veil {
+    width: 88px;
+    top: 18px;
+    bottom: 70px;
+  }
+
+  .activities-progress-wrap {
+    padding-inline: 14px;
+  }
+
+  .activities-card-footer {
+    padding: 12px 14px 18px;
+  }
+
+  .activities-see-all {
+    margin-right: 0;
+  }
+
+  .activities-nav-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .activities-nav-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .split-card {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .socios-vantagens {
+    max-width: 100%;
+    align-self: auto;
+  }
+
+  .socios-top {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .lanyard-scene {
+    align-items: center;
+  }
+
+  .partners-label {
+    text-align: left;
+  }
+
+  .hero-content {
+    padding-top: 22px;
+    padding-bottom: 34px;
+  }
+
+  .presidents-showcase {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .president-detail {
+    position: static;
+    top: auto;
+    order: -1;
+  }
+
+  .president-row {
+    padding: 15px 16px;
+  }
+
+  .president-row:hover,
+  .president-row:focus-visible,
+  .president-row[aria-selected="true"] {
+    transform: none;
+  }
+
+  .president-row-name {
+    font-size: 1.05rem;
+  }
+
+  .president-row-badge {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .president-photo-shell {
+    height: min(68vh, 520px);
+    min-height: 260px;
+  }
+
+  .presidents-showcase:not(.has-active-president) {
+    grid-template-columns: 1fr;
+  }
+}
+

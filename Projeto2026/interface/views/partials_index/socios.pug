@@ -1,0 +1,93 @@
+section#socios.section.alt-bg.reveal
+  -
+    const linkColaboradorSocios = textoSolto?.["link-colaborador"] || "#voluntarios";
+  .container
+
+    .socios-top
+
+      .lanyard-scene
+        svg.lanyard-strap(viewBox='0 0 100 240' xmlns='http://www.w3.org/2000/svg' aria-hidden='true')
+          defs
+            linearGradient#band-h(x1='0%' y1='0%' x2='100%' y2='0%')
+              stop(offset='0%'   stop-color='#8c6208')
+              stop(offset='18%'  stop-color='#c9920c')
+              stop(offset='44%'  stop-color='#f5d060')
+              stop(offset='56%'  stop-color='#ffe88a')
+              stop(offset='82%'  stop-color='#c9920c')
+              stop(offset='100%' stop-color='#8c6208')
+            linearGradient#band-v(x1='0%' y1='0%' x2='0%' y2='100%')
+              stop(offset='0%'   stop-color='rgba(0,0,0,0.10)')
+              stop(offset='100%' stop-color='rgba(0,0,0,0.28)')
+            linearGradient#fade-grad(x1='0%' y1='0%' x2='0%' y2='100%')
+              stop(offset='0%'   stop-color='black')
+              stop(offset='45%'  stop-color='white')
+              stop(offset='100%' stop-color='white')
+            mask#band-fade
+              rect(x='0' y='0' width='100' height='172' fill='url(#fade-grad)')
+            linearGradient#clip-h(x1='0%' y1='0%' x2='100%' y2='0%')
+              stop(offset='0%'   stop-color='#555')
+              stop(offset='30%'  stop-color='#ccc')
+              stop(offset='55%'  stop-color='#eee')
+              stop(offset='80%'  stop-color='#aaa')
+              stop(offset='100%' stop-color='#555')
+            linearGradient#clip-v(x1='0%' y1='0%' x2='0%' y2='100%')
+              stop(offset='0%'   stop-color='#ddd')
+              stop(offset='40%'  stop-color='#aaa')
+              stop(offset='100%' stop-color='#777')
+            filter#clip-shadow(x='-30%' y='-20%' width='160%' height='160%')
+              feDropShadow(dx='0' dy='2' stdDeviation='2' flood-color='rgba(0,0,0,0.35)')
+
+          g(mask='url(#band-fade)')
+            rect(x='42' y='0' width='18' height='172' rx='2' fill='rgba(60,35,0,0.20)' transform='translate(2,2)')
+            rect(x='41' y='0' width='18' height='172' rx='2' fill='url(#band-h)')
+            rect(x='41' y='0' width='18' height='172' rx='2' fill='url(#band-v)' opacity='0.5')
+            line(x1='44' y1='2' x2='44' y2='170' stroke='rgba(100,65,0,0.45)' stroke-width='0.7' stroke-dasharray='5,4')
+            line(x1='56' y1='2' x2='56' y2='170' stroke='rgba(255,240,130,0.35)' stroke-width='0.7' stroke-dasharray='5,4')
+            rect(x='48' y='0' width='6' height='172' rx='1' fill='rgba(255,252,190,0.22)')
+
+          rect(x='44' y='170' width='12' height='10' rx='2' fill='#9a7008')
+          rect(x='45' y='171' width='10' height='8' rx='1.5' fill='rgba(255,230,80,0.25)')
+
+          ellipse(cx='50' cy='183' rx='7.5' ry='5' fill='none' stroke='url(#clip-h)' stroke-width='3' filter='url(#clip-shadow)')
+          ellipse(cx='50' cy='183' rx='7.5' ry='5' fill='none' stroke='rgba(255,255,255,0.25)' stroke-width='1')
+          rect(x='44' y='186' width='12' height='28' rx='6' fill='url(#clip-v)' filter='url(#clip-shadow)')
+          rect(x='44.5' y='187' width='2.5' height='26' rx='1.25' fill='rgba(255,255,255,0.30)')
+          rect(x='46.5' y='190' width='7' height='20' rx='3.5' fill='rgba(20,20,30,0.55)')
+          rect(x='46.5' y='190' width='7' height='20' rx='3.5' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='0.5')
+          ellipse(cx='50' cy='217' rx='6' ry='3.5' fill='none' stroke='url(#clip-h)' stroke-width='2.5' filter='url(#clip-shadow)')
+          ellipse(cx='50' cy='217' rx='6' ry='3.5' fill='none' stroke='rgba(255,255,255,0.22)' stroke-width='0.8')
+          line(x1='50' y1='220' x2='50' y2='233' stroke='#888' stroke-width='2.5' stroke-linecap='round')
+          line(x1='50' y1='220' x2='50' y2='232' stroke='rgba(255,255,255,0.20)' stroke-width='1' stroke-linecap='round')
+          circle(cx='50' cy='236' r='3.2' fill='none' stroke='url(#clip-h)' stroke-width='2')
+          circle(cx='50' cy='236' r='3.2' fill='none' stroke='rgba(255,255,255,0.20)' stroke-width='0.7')
+
+        .lanyard-badge
+          .lanyard-hole
+          .lanyard-badge-inner
+            span.lanyard-org AEEUM
+            h2.lanyard-title
+              | Torna-te
+              br
+              | Sócio
+            p.lanyard-sub Associação de Estudantes de Enfermagem da Universidade do Minho
+            a.btn.btn-primary.lanyard-btn(href=linkColaboradorSocios target='_blank' rel='noopener noreferrer') Aderir Agora
+          .lanyard-badge-footer
+
+      .glass-card.socios-vantagens
+        h3.socios-block-title Vantagens
+        ul.socios-list
+          each vantagem in textoSolto.vantagens_socio
+            li= vantagem.texto
+
+    .partners-track-wrap
+      p.partners-label Marcas Parceiras
+      .partners-track
+        .partners-slide
+          each patrocinador in patrocinadores
+            a.partner-chip(href=patrocinador.link target='_blank')
+              img(src=patrocinador.logo alt=patrocinador.nome)
+              span= patrocinador.nome
+          each patrocinador in patrocinadores
+            a.partner-chip(href=patrocinador.link target='_blank' aria-hidden='true')
+              img(src=patrocinador.logo alt=patrocinador.nome)
+              span= patrocinador.nome
